@@ -1,0 +1,22 @@
+<section class="app-header">
+  <div class="app-header-logo">
+    <img class="app-header-logo-img" src="Logo.svg" alt="Logo MicaBrigs"/>
+  </div>
+
+  <div class="app-header-selec">
+    <a href="#app-hero" (click)="navigate($event, '#smooth-wrapper')" class="divselec">MICABRIGS</a>
+    <span class="divdot">.</span>
+
+    <a href="#aboutus" (click)="navigate($event, '#aboutus')" class="divselec">QUEM SOMOS?</a>
+    <span class="divdot">.</span>
+
+    <a href="#app-store" (click)="navigate($event, '#app-store')" class="divselec">PRODUTOS</a>
+    <span class="divdot">.</span>
+
+    <a href="#contacts" (click)="navigate($event, '#contacts')" class="divselec">CONTATOS</a>
+
+    <button class="header-card" (click)="openCart()">
+      <img class="header-card-btn" src="Vector.png" alt="Carrinho">
+    </button>
+  </div>
+</section>

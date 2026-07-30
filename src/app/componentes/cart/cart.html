@@ -1,0 +1,48 @@
+<section>   
+    @if (isOpen) {
+    <div class="cart-modal-overlay">
+            <div class="cart-modal-container">
+                <h2>Meu carrinho</h2>
+                <div class="cart-items-list">
+                    @for(item of cartService.cartItems(); track $index){
+                <div class="cart-item-row" style="display:flex;justify-content: space-between;align-items:center;margin-bottom: 10px;">
+                    <div>
+                        <strong>{{item.name}}</strong>
+                        <p style="font-size: 12px; color:#666; margin:0">{{item.box_size}} ({{item.quantity}}x)</p>
+                    </div>
+                    <div style="display: flex;align-items: center;gap:10px;">
+                        <span>R${{item.subtotal.toFixed(2)}}</span>
+                        <button (click)="removeItem($index)" style="background: none; border:none; color:red; cursor: pointer;">X</button>
+                    </div>
+                </div>
+            }@empty {
+                <p style="color: #666;font-size:14px;">Seu carrinho está vazio</p>    
+            }</div>
+                <div class="cart-total-section">
+                    <span>Total:</span>
+<span class="total-price">R$ {{ cartService.totalPrice()?.toFixed(2) }}</span>                </div>
+                <p class="section-label">Data desejada para o pedido</p>
+                <input
+                type="date"
+                class="cart-input"
+                [(ngModel)]="deliveryDate"
+                style="margin-bottom: 10px;"
+                />
+                <p class="section-label">Endereço de entrega</p>
+                <input
+                type="text"
+                placeholder="Digite seu endereço completo..."
+                class="cart-input"
+                [(ngModel)]="address"
+                />
+                @if (showAddressWarning()){
+                <p class="address">Digite seu endereço completo!</p>
+                }
+                <div class="cart-actions">
+                    <button class="btn-close" (click) ="closeModal()">Fechar</button>
+                    <button class="btn-checkout" (click) ="checkout()">Finalizar pedido</button>
+                </div>
+            </div>
+        </div>
+    }
+    </section>

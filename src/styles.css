@@ -1,1 +1,30 @@
-/* You can add global styles to this file, and also import other style files */
+
+@import url('https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Manrope:wght@200..800&family=Montserrat:ital,wght@0,100..900;1,100..900&family=New+Amsterdam&family=Pacifico&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');    
+html,body{
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    background: radial-gradient(
+         #F5ECE1 0%,
+       #E2D0B9 60%,
+       #D2B799 100%
+    )   
+}
+
+#smooth-wrapper{
+    overflow: hidden;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+}
+
+#smooth-content{
+    width:100%;
+    will-change: transform;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+}
+
