@@ -40,19 +40,24 @@ get isOpen():boolean{
    this.showAddressWarning.set(false);
 
    this.cartService.sendOrder(this.address, this.deliveryDate).subscribe({
-    next: () =>{
-      const whatsappUrl = this.cartService.generateWhatsAppUrl(this.address,this.deliveryDate);
-      window.open(whatsappUrl,'_blank');
-        this.cartService.clearCart();
-        this.closeModal();
-    },
-    error: (err) =>{
-      console.error('Erro ao registrar o pedido', err);
-
-      const whatsappUrl= this.cartService.generateWhatsAppUrl(this.address, this.deliveryDate);
+    next: () => {
+      const whatsappUrl = this.cartService.generateWhatsAppUrl(this.address, this.deliveryDate);
       window.open(whatsappUrl, '_blank');
       this.cartService.clearCart();
       this.closeModal();
+    },
+    error: (err) => {
+      console.error('Erro ao registrar o pedido no servidor:', err);
+      // Fallback gracioso com notificação explicita ao usuário ao invés de fail-open silencioso
+      const confirmRedirect = confirm(
+        'Não foi possível conectar ao servidor de pedidos. Deseja enviar o pedido diretamente via WhatsApp?'
+      );
+      if (confirmRedirect) {
+        const whatsappUrl = this.cartService.generateWhatsAppUrl(this.address, this.deliveryDate);
+        window.open(whatsappUrl, '_blank');
+        this.cartService.clearCart();
+        this.closeModal();
+      }
     }
    });
 }
