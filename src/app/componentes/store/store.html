@@ -1,6 +1,8 @@
 <section class="store" id="app-store">
-
-  <!-- ==================== BRIGADEIROS ==================== -->
+  <h1>Cookies</h1>
+  <div class="cesta-3d-wrapper">
+    <div #canvasContainer class="canvas-container"></div>
+  </div>
   <h1 class="app-title">Brigadeiros</h1>
   <div class="brigs">
     @for (produto of brigadeiros; track produto.id) {
@@ -8,25 +10,23 @@
         <div class="card-light"></div>
         
         <div class="conteudo">
-          <!-- Esquerda: Imagem -->
           <img class="img" [src]="produto.img" [alt]="produto.nome">
           
-          <!-- Direita: Informações -->
           <div class="card-info">
             <h2>{{produto.nome}}</h2>
             <h3>{{produto.desc}}</h3>
             
             <div class="action-container">
               <ul class="menu-links">
-                <li (click)= "toggleDropdown(produto,$event)">
+                <li (click)="toggleDropdown(produto,$event)">
                   {{produto.selectedBox || 'Caixa de 4 brigadeiros'}}
                   <ul class="dropdown" [class.active]="produto.dropdownOpen">
-                                     <li (click)="selectBox(produto, 'Caixa de 4 brownies')">Caixa de 4 brownies</li>
-                    <li (click)="selectBox(produto, 'Caixa de 6 brigadeiros')">Caixa de 6 brigadeiros</li>
-                    <li (click)="selectBox(produto, 'Caixa de 12 brigadeiros')">Caixa de 12 brigadeiros</li>
-                    <li (click)="selectBox(produto, 'Caixa de 25 brigadeiros')">Caixa de 25 brigadeiros</li>
-                    <li (click)="selectBox(produto, 'Caixa de 50 brigadeiros')">Caixa de 50 brigadeiros</li>
-                    <li (click)="selectBox(produto, 'Caixa de 100 brigadeiros')">Caixa de 100 brigadeiros</li>
+                    <li (click)="selectBox(produto, 'Caixa de 4 brigadeiros', $event)">Caixa de 4 brigadeiros</li>
+                    <li (click)="selectBox(produto, 'Caixa de 6 brigadeiros', $event)">Caixa de 6 brigadeiros</li>
+                    <li (click)="selectBox(produto, 'Caixa de 12 brigadeiros', $event)">Caixa de 12 brigadeiros</li>
+                    <li (click)="selectBox(produto, 'Caixa de 25 brigadeiros', $event)">Caixa de 25 brigadeiros</li>
+                    <li (click)="selectBox(produto, 'Caixa de 50 brigadeiros', $event)">Caixa de 50 brigadeiros</li>
+                    <li (click)="selectBox(produto, 'Caixa de 100 brigadeiros', $event)">Caixa de 100 brigadeiros</li>
                   </ul>
                 </li>
               </ul>
@@ -41,7 +41,6 @@
     }
   </div>
 
-  <!-- ==================== BROWNIES ==================== -->
   <h1 class="app-title">Brownies</h1>
   <div class="brigs-br">
     @for (produto of brownies; track produto.id) {
@@ -49,25 +48,23 @@
         <div class="card-light"></div>
         
         <div class="conteudo">
-          <!-- Esquerda: Imagem -->
           <img class="img" [src]="produto.img" [alt]="produto.nome">
           
-          <!-- Direita: Informações -->
           <div class="card-info">
             <h2>{{produto.nome}}</h2>
             <h3>{{produto.desc}}</h3>
             
             <div class="action-container">
               <ul class="menu-links">
-                <li (click)= "toggleDropdown(produto,$event)">
+                <li (click)="toggleDropdown(produto,$event)">
                   {{produto.selectedBox || 'Caixa de 4 brownies'}}
                   <ul class="dropdown" [class.active]="produto.dropdownOpen">
-                    <li (click)="selectBox(produto, 'Caixa de 4 brownies')">Caixa de 4 brownies</li>
-                    <li (click)="selectBox(produto, 'Caixa de 6 brownies')">Caixa de 6 brownies</li>
-                    <li (click)="selectBox(produto, 'Caixa de 12 brownies')">Caixa de 12 brownies</li>
-                    <li (click)="selectBox(produto, 'Caixa de 25 brownies')">Caixa de 25 brownies</li>
-                    <li (click)="selectBox(produto, 'Caixa de 50 brownies')">Caixa de 50 brownies</li>
-                    <li (click)="selectBox(produto, 'Caixa de 100 brownies')">Caixa de 100 brownies</li>
+                    <li (click)="selectBox(produto, 'Caixa de 4 brownies', $event)">Caixa de 4 brownies</li>
+                    <li (click)="selectBox(produto, 'Caixa de 6 brownies', $event)">Caixa de 6 brownies</li>
+                    <li (click)="selectBox(produto, 'Caixa de 12 brownies', $event)">Caixa de 12 brownies</li>
+                    <li (click)="selectBox(produto, 'Caixa de 25 brownies', $event)">Caixa de 25 brownies</li>
+                    <li (click)="selectBox(produto, 'Caixa de 50 brownies', $event)">Caixa de 50 brownies</li>
+                    <li (click)="selectBox(produto, 'Caixa de 100 brownies', $event)">Caixa de 100 brownies</li>
                   </ul>
                 </li>
               </ul>
@@ -82,7 +79,6 @@
     }
   </div>
 
-  <!-- ==================== CESTAS ==================== -->
   <h1 class="app-title">Cestas</h1>
   <div class="carousel-wrapper">
     
@@ -105,46 +101,42 @@
           <div class="card-light"></div>
           
           <div class="conteudo">
-            <!-- Esquerda: Imagem -->
-             <div class="img-container">
+            <div class="img-container">
               <svg class="curved-badge" viewBox="0 0 160 80" xmlns="http://www.w3.org/2000/svg">
-    <path id="cestaCurve" d="M 10,70 A 70,70 0 0,1 150,70" fill="none" />
-    
-    <text>
-      <textPath href="#cestaCurve" startOffset="50%" text-anchor="middle">
-        PARA COMPARTILHAR
-      </textPath>
-    </text>
-  </svg>
-            <img class="img-cesta" [src]="produto.img" [alt]="produto.nome">
-             </div>
+                <path id="cestaCurve" d="M 10,70 A 70,70 0 0,1 150,70" fill="none" />
+                <text>
+                  <textPath href="#cestaCurve" startOffset="50%" text-anchor="middle">
+                    PARA COMPARTILHAR
+                  </textPath>
+                </text>
+              </svg>
+              <img class="img-cesta" [src]="produto.img" [alt]="produto.nome">
+            </div>
             
-            <!-- Direita: Informações (TUDO dentro da card-info) -->
-             </div>
             <div class="card-info">
               <h2>{{produto.nome}}</h2>
               <h3>{{produto.desc}}</h3>
               
               <div class="action-container">
                 <ul class="menu-links">
-                <li (click)= "toggleDropdown(produto,$event)">
+                  <li (click)="toggleDropdown(produto,$event)">
                     {{produto.selectedBox || 'Cesta Inteira'}}
-                  <ul class="dropdown" [class.active]="produto.dropdownOpen">
-                      <li (click)="selectBox(produto, 'Cesta Especial')">Cesta Especial</li>
-                      <li (click)="selectBox(produto, 'Cesta Inteira')">Cesta Inteira</li>
+                    <ul class="dropdown" [class.active]="produto.dropdownOpen">
+                      <li (click)="selectBox(produto, 'Cesta Especial', $event)">Cesta Especial</li>
+                      <li (click)="selectBox(produto, 'Cesta Inteira', $event)">Cesta Inteira</li>
                     </ul>
                   </li>
                 </ul>
                 <button class="shop-btn" (click)="addToCart(produto)">AD. AO CARRINHO</button>
               </div>
-            </div> <!-- Fim card-info -->
-
-          </div> <!-- Fim conteudo -->
-        </div>
+            </div> </div> </div>
+      </div>
     } @empty {
       <p>Nenhuma cesta disponível no momento.</p>
     }
 
   </div>
+
+
 
 </section>
