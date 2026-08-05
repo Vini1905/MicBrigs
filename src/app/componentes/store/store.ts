@@ -101,36 +101,15 @@ export class Store implements AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {
       
-      // Delay sutil para garantir que a ViewChild do DOM carregou
-      setTimeout(() => {
-        if (this.canvasContainer) {
-          this.init3DScene();
-        }
-      }, 50);
-
       this.ngZone.runOutsideAngular(() => {
-        setTimeout(() => {
-          this.ctx = gsap.context(() => {
+        // Inicializa o contexto principal do GSAP
+        this.ctx = gsap.context(() => {
 
-            gsap.utils.toArray<HTMLElement>('.app-title').forEach((title) => {
-              gsap.from(title, {
-                scrollTrigger: {
-                  trigger: title,
-                  start: 'top 85%',
-                  toggleActions: 'play none none reverse',
-                },
-                opacity: 0,
-                y: 50,
-                duration: 1,
-                stagger: 0.15,
-                ease: 'power3.out',
-              });
-            });
-
-            gsap.from('.brigs-br .card-brownie', {
+          gsap.utils.toArray<HTMLElement>('.app-title').forEach((title) => {
+            gsap.from(title, {
               scrollTrigger: {
-                trigger: '.brigs-br',
-                start: 'top 80%',
+                trigger: title,
+                start: 'top 85%',
                 toggleActions: 'play none none reverse',
               },
               opacity: 0,
@@ -139,133 +118,184 @@ export class Store implements AfterViewInit, OnDestroy {
               stagger: 0.15,
               ease: 'power3.out',
             });
-
           });
-          ScrollTrigger.refresh();
+
+          gsap.from('.brigs-br .card-brownie', {
+            scrollTrigger: {
+              trigger: '.brigs-br',
+              start: 'top 80%',
+              toggleActions: 'play none none reverse',
+            },
+            opacity: 0,
+            y: 50,
+            duration: 1,
+            stagger: 0.15,
+            ease: 'power3.out',
+          });
+
+        });
+
+        // Delay para subir a cena 3D após o DOM estar totalmente pronto
+        setTimeout(() => {
+          if (this.canvasContainer) {
+            this.init3DScene();
+          }
         }, 100);
       });
     }
   }
 
-private init3DScene(): void {
-  try {
-    if (!this.canvasContainer) return;
+  private init3DScene(): void {
+ 
+    try {
+      if (!this.canvasContainer) return;
 
-    const container = this.canvasContainer.nativeElement;
-    const width = container.clientWidth || 320;
-    const height = container.clientHeight || 320;
+      const container = this.canvasContainer.nativeElement;
+      const width = container.clientWidth || 320;
+      const height = container.clientHeight || 320;
 
-    // 1. CENA
-    this.scene = new THREE.Scene();
+      // 1. CENA
+      this.scene = new THREE.Scene();
 
-    // 2. CÂMERA (Visão centralizada)
-    this.camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
-    this.camera.position.set(0, 0, 3);
+      // 2. CÂMERA
+      this.camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+      this.camera.position.set(0, 0, 3);
 
-    // 3. RENDERIZADOR
-    this.renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-    this.renderer.setSize(width, height);
-    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    this.renderer.outputColorSpace = THREE.SRGBColorSpace;
+         try {
+        this.renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        this.renderer.setSize(width, height);
+        this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        this.renderer.outputColorSpace = THREE.SRGBColorSpace;
 
-    // Limpa o container antes de adicionar um novo canvas
-    container.innerHTML = '';
-    container.appendChild(this.renderer.domElement);
+        container.innerHTML = '';
+        container.appendChild(this.renderer.domElement);
+      } catch (webGlError) {
+        console.warn('WebGL não suportado ou bloqueado no navegador.', webGlError);
+        container.innerHTML = `<img src="cookie.png" style="width:100%; height:100%; object-fit:contain;" />`;
+        return;
+      }
 
-    // 4. ILUMINAÇÃO
-    // 4. ILUMINAÇÃO (Aumentando e adicionando HemisphereLight)
-const ambientLight = new THREE.AmbientLight(0xffffff, 3.0); 
-this.scene.add(ambientLight);
+      // 3. RENDERIZADOR
+      this.renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+      this.renderer.setSize(width, height);
+      this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      this.renderer.outputColorSpace = THREE.SRGBColorSpace;
 
-const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444, 2.0);
-hemiLight.position.set(0, 20, 0);
-this.scene.add(hemiLight);
+      container.innerHTML = '';
+      container.appendChild(this.renderer.domElement);
 
-const dirLight1 = new THREE.DirectionalLight(0xffffff, 2.5);
-dirLight1.position.set(5, 5, 5);
-this.scene.add(dirLight1);
+      // 4. ILUMINAÇÃO (Brilho intenso para eliminar sombra preta)
+      const ambientLight = new THREE.AmbientLight(0xffffff, 4.0); 
+      this.scene.add(ambientLight);
 
-    // 5. CARREGADOR DO GLB COM DRACO
-    const loader = new GLTFLoader();
-    const textureLoader = new THREE.TextureLoader();
-    const texturaDoce = textureLoader.load('bl-texture.png');
-    const dracoLoader = new DRACOLoader();
-    texturaDoce.colorSpace = THREE.SRGBColorSpace;
-    texturaDoce.flipY = false;
-    dracoLoader.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.7/');//  loader.setDRACOLoader(dracoLoader);
-    
-    loader.setDRACOLoader(dracoLoader);
+      const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444, 2.5);
+      hemiLight.position.set(0, 20, 0);
+      this.scene.add(hemiLight);
 
-    dracoLoader.setWorkerLimit(0);
+      const dirLight1 = new THREE.DirectionalLight(0xffffff, 3.0);
+      dirLight1.position.set(5, 5, 5);
+      this.scene.add(dirLight1);
 
-// Vincula ao GLTFLoader obrigatoriamente antes do load()
+      // 5. CARREGAMENTO DE TEXTURA E MODELO
+      const textureLoader = new THREE.TextureLoader();
+      const texturaDoce = textureLoader.load('brigs-texture.png');
+      texturaDoce.colorSpace = THREE.SRGBColorSpace;
+      texturaDoce.flipY = false;
+
+      const loader = new GLTFLoader();
+      const dracoLoader = new DRACOLoader();
+      dracoLoader.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.7/');
+      dracoLoader.setWorkerLimit(0);
       loader.setDRACOLoader(dracoLoader);
 
-    const caminhoModelo = 'brigs.glb'; // ou 'assets/cookie.glb'
+      const caminhoModelo = 'brigs.glb';
 
-    loader.load(
-  caminhoModelo, 
-  (gltf) => {
-    this.model = gltf.scene;
+      loader.load(
+        caminhoModelo, 
+        (gltf) => {
+          this.model = gltf.scene;
 
-    // Percorre cada objeto 3D do cookie para ativar as cores e texturas
-    this.model.traverse((child) => {
-      if ((child as THREE.Mesh).isMesh) {
-        const mesh = child as THREE.Mesh;
-        
-        if (mesh.material) {
-          const mat = new THREE.MeshStandardMaterial({
-              map: texturaDoce, // Aplica a foto como pele do 3D
-              roughness: 0.8,   // Deixa fosco (como chocolate)
-              metalness: 0.1,
-              side: THREE.DoubleSide
-            });
-            mesh.material = mat;
-          
-          // 1. Garante que a textura de imagem use o espaço de cores correto (sRGB)
-          if (mat.map) {
-            mat.map.colorSpace = THREE.SRGBColorSpace;
-            mat.map.needsUpdate = true;
-          }
-          
-          // 2. Renderiza ambos os lados da face
-          mat.side = THREE.DoubleSide;
-          mat.needsUpdate = true;
-        }
-      }
-    });
+          // Aplica textura e habilita reflexo básico
+          this.model.traverse((child) => {
+            if ((child as THREE.Mesh).isMesh) {
+              const mesh = child as THREE.Mesh;
+              mesh.material = new THREE.MeshStandardMaterial({
+                map: texturaDoce,
+                roughness: 0.6,
+                metalness: 0.1,
+                side: THREE.DoubleSide
+              });
+            }
+          });
 
-    this.model.scale.set(1.2, 1.2, 1.2);
-    this.model.position.set(0, 0, 0);
+          // Estado Inicial: Gigante e centralizado
+          this.model.scale.set(2.0, 2.0, 2.0);
+          this.model.position.set(0, 0, 0);
+          this.scene.add(this.model);
 
-    this.scene.add(this.model);
+          // 6. ANIMAÇÃO DE SCROLL (Adicionada ao contexto GSAP existente)
+          this.ngZone.runOutsideAngular(() => {
+            if (this.ctx) {
+              this.ctx.add(() => {
+                const tl = gsap.timeline({
+                  scrollTrigger: {
+                    trigger: '.store', // Usa o container principal do HTML
+                    start: 'top top',
+                    end: '+=1200',
+                    scrub: 1,
+                    pin: true,
+                    anticipatePin: 1
+                  }
+                });
 
-    // Animação de entrada
-    gsap.from(this.model.rotation, {
-      y: Math.PI * 2,
-      duration: 1.5,
-      ease: 'power2.out'
-    });
-  },
-  undefined,
-  (error) => console.error('Erro ao carregar o modelo no Three.js:', error)
-);
+                tl.to(this.model.scale, {
+                  x: 0.8,
+                  y: 0.8,
+                  z: 0.8,
+                  ease: 'power1.inOut'
+                }, 0)
+                .to(this.model.position, {
+                  y: -0.6,
+                  z: 0,
+                  ease: 'power1.inOut'
+                }, 0)
+                .to(this.model.rotation, {
+                  y: Math.PI * 2,
+                  x: Math.PI * 0.2,
+                  ease: 'power1.inOut'
+                }, 0);
+              });
 
-    // 6. LOOP DE ANIMAÇÃO (Rotação contínua)
-    const animate = () => {
-      this.animationId = requestAnimationFrame(animate);
+              // Atualiza o ScrollTrigger assim que o modelo 3D é adicionado
+              ScrollTrigger.refresh();
+            }
+            // Adicione após criar o renderer:
+window.addEventListener('resize', () => {
+  if (!this.canvasContainer) return;
+  const w = this.canvasContainer.nativeElement.clientWidth;
+  const h = this.canvasContainer.nativeElement.clientHeight;
+  
+  this.camera.aspect = w / h;
+  this.camera.updateProjectionMatrix();
+  this.renderer.setSize(w, h);
+});
+          });
+        },
+        undefined,
+        (error) => console.error('Erro ao carregar o modelo no Three.js:', error)
+      );
 
-      if (this.model) {
-        this.model.rotation.y += 0.008;
-      }
-      this.renderer.render(this.scene, this.camera);
-    };
+      // 7. LOOP DE RENDERIZAÇÃO
+      const animate = () => {
+        this.animationId = requestAnimationFrame(animate);
+        this.renderer.render(this.scene, this.camera);
+      };
 
-    animate();
-  } catch (err) {
-    console.error('Erro na cena 3D:', err);
+      animate();
+    } catch (err) {
+      console.error('Erro na cena 3D:', err);
+    }
   }
-}
 
   ngOnDestroy(): void {
     if (this.animationId) {

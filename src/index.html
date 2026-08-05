@@ -4,7 +4,15 @@
   <meta charset="utf-8">
   <title>Micbrigs10</title>
   <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="
+  default-src 'self';
+  script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.gstatic.com;
+  worker-src 'self' blob:;
+  connect-src 'self' ws://localhost:* http://localhost:* http://127.0.0.1:* https: blob: https://www.gstatic.com;
+  img-src 'self' data: blob:;
+  style-src 'self' 'unsafe-inline';
+" 
+  name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="Logo.svg">
 </head>
 <body>
