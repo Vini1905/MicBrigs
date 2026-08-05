@@ -2,7 +2,5 @@
 command = "npm run build"
 publish = "dist/micbrigs-1.0/browser"
 
-[[plugins]]
-package = "@netlify/angular-runtime"
-[plugins.inputs]
-disable = true
+[build.environment]
+ NETLIFY_DISABLE_ANGULAR_RUNTIME = "true"
