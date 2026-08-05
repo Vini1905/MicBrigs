@@ -1,8 +1,37 @@
 <section class="store" id="app-store">
   <section class="store secao-cookie-3d">
   <h1 class="app-title">Cookies</h1>
+    <div class="brigs">
+    @for (produto of cookies; track produto.id){
+            <div class="card" #cardCookie (mousemove)="onCardMouseMove($event, cardCookie)" (mouseleave)="onCardMouseLeave(cardCookie)">
+                      <div class="card-light"></div>
+        <div class="conteudo">
   <div class="cesta-3d-wrapper">
     <div #canvasContainer class="canvas-container"></div>
+  </div>
+  <div class="card-info">
+       <h2>{{produto.nome}}</h2>
+            <h3>{{produto.desc}}</h3>
+                   <div class="action-container">
+              <ul class="menu-links">
+                <li (click)="toggleDropdown(produto,$event)">
+                  {{produto.selectedBox || 'Pacote com 1 Cookie'}}
+                  <ul class="dropdown" [class.active]="produto.dropdownOpen">
+                    <li (click)="selectBox(produto, 'Pacote com 1 Cookie', $event)">Pacote com 1 Cookie</li>
+                    <li (click)="selectBox(produto, 'Pacote com 3 Cookies', $event)">Pacote com 3 Cookies</li>
+                    <li (click)="selectBox(produto, 'Pacote com 6 Cookies', $event)">Pacote com 6 Cookies</li>
+                    <li (click)="selectBox(produto, 'Pacote com 12 Cookies', $event)">Pacote com 12 Cookies</li>
+                  </ul>
+                </li>
+              </ul>
+              <button class="shop-btn" (click)="addToCart(produto)">AD. AO CARRINHO</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    } @empty {
+      <p>Nenhum cookie disponível no momento.</p>
+    }
   </div>
   </section>
   <h1 class="app-title">Brigadeiros</h1>

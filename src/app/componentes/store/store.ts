@@ -14,7 +14,7 @@ export interface Produto {
   nome: string;
   desc: string;
   img: string;
-  categoria: 'brigadeiro' | 'brownie' | 'cesta';
+  categoria: 'brigadeiro' | 'brownie' | 'cesta' |'cookie';
   selectedBox?: string;
   dropdownOpen?: boolean;
 }
@@ -31,11 +31,8 @@ export interface Cesta extends Produto {
   categoria: 'cesta';
 }
 
-export interface Sabor {
-  id: string;
-  nome: string;
-  imagem: string;
-  Classesabor: string;
+export interface Cookie extends Produto {
+  categoria: 'cookie';
 }
 
 @Component({
@@ -70,6 +67,12 @@ export class Store implements AfterViewInit, OnDestroy {
     'Caixa de 24 brigadeiros': 72.00,
     'Cesta Inteira': 120.00,
     'Cesta Especial': 18.00,
+    'Pacote com 1 Cookie' : 13.00,
+    'Pacote com 3 CookieS' : 13.00,
+    'Pacote com 6 CookieS' : 13.00,
+    'Pacote com 12 CookieS' : 13.00,
+
+
   };
 
   toggleDropdown(produto: Produto, event: Event) {
@@ -339,6 +342,14 @@ window.addEventListener('resize', () => {
   }
 
   produtos: Produto[] = [
+      {
+      id: 9,
+      nome: 'Cookie de Chocolate',
+      img: '',
+      desc: 'O tradicional brigadeiro gourmet, extremamente cremoso e coberto com chocolate ao leite.',
+      categoria: 'cookie',
+      selectedBox: 'Pacote com 1 Cookie'
+    },
     {
       id: 1,
       nome: 'Brigadeiro de Chocolate ao Leite',
@@ -418,16 +429,6 @@ window.addEventListener('resize', () => {
       selectedBox: 'Cesta Inteira'
     },
   ];
-
-  sabor: Sabor[] = [
-    {
-      id: 'preto',
-      nome: 'Clássico',
-      imagem: '',
-      Classesabor: '',
-    },
-  ];
-
   get brigadeiros(): Produto[] {
     return this.produtos.filter((produto) => produto.categoria === 'brigadeiro');
   }
@@ -438,6 +439,10 @@ window.addEventListener('resize', () => {
 
   get cestas(): Produto[] {
     return this.produtos.filter((produto) => produto.categoria === 'cesta');
+  }
+
+    get cookies(): Produto[] {
+    return this.produtos.filter((produto) => produto.categoria === 'cookie');
   }
 
   @ViewChildren('carouselItem') carouselItems!: QueryList<ElementRef<HTMLElement>>;
