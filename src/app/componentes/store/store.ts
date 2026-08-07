@@ -232,86 +232,40 @@ export class Store implements AfterViewInit, OnDestroy {
           });
 
           // Estado Inicial: Gigante e centralizado
-          this.model.scale.set(2.0, 2.0, 2.0);
-          this.model.position.set(0, 0, 0);
+          this.model.scale.set(1.4, 1.4, 1.4);
+          this.model.position.set(0, -0.2, 0);
           this.scene.add(this.model);
-
-          // 6. ANIMAÇÃO DE SCROLL (Adicionada ao contexto GSAP existente)
-          this.ngZone.runOutsideAngular(() => {
-            if (this.ctx) {
-              this.ctx.add(() => {
-                const tl = gsap.timeline({
-                  scrollTrigger: {
-                    trigger: '.store', // Usa o container principal do HTML
-                    start: 'top top',
-                    end: '+=1200',
-                    scrub: 1,
-                    pin: true,
-                    anticipatePin: 1
-                  }
-                });
-
-                tl.to(this.model.scale, {
-                  x: 0.8,
-                  y: 0.8,
-                  z: 0.8,
-                  ease: 'power1.inOut'
-                }, 0)
-                .to(this.model.position, {
-                  y: -0.6,
-                  z: 0,
-                  ease: 'power1.inOut'
-                }, 0)
-                .to(this.model.rotation, {
-                  y: Math.PI * 2,
-                  x: Math.PI * 0.2,
-                  ease: 'power1.inOut'
-                }, 0);
-              });
-
-              // Atualiza o ScrollTrigger assim que o modelo 3D é adicionado
-              ScrollTrigger.refresh();
-            }
-            // Adicione após criar o renderer:
-window.addEventListener('resize', () => {
-  if (!this.canvasContainer) return;
-  const w = this.canvasContainer.nativeElement.clientWidth;
-  const h = this.canvasContainer.nativeElement.clientHeight;
-  
-  this.camera.aspect = w / h;
-  this.camera.updateProjectionMatrix();
-  this.renderer.setSize(w, h);
-});
-          });
         },
         undefined,
         (error) => console.error('Erro ao carregar o modelo no Three.js:', error)
       );
 
+      
+
       // 7. LOOP DE RENDERIZAÇÃO
       const animate = () => {
         this.animationId = requestAnimationFrame(animate);
-        this.renderer.render(this.scene, this.camera);
-      };
-
-      animate();
-    } catch (err) {
-      console.error('Erro na cena 3D:', err);
+    if (this.model) {
+      this.model.rotation.y +=0.008;
     }
+    this.renderer.render(this.scene, this.camera);
+  };
+  animate();
+}catch(err){
+  console.error('Erro na cena 3D:', err);
+}
   }
-
-  ngOnDestroy(): void {
-    if (this.animationId) {
-      cancelAnimationFrame(this.animationId);
-    }
-    if (this.renderer) {
-      this.renderer.dispose();
-    }
-    if (this.ctx) {
-      this.ctx.revert();
-    }
-  }
-
+  ngOnDestroy(): void{
+        if(this.animationId){
+          cancelAnimationFrame(this.animationId);
+        }
+        if(this.renderer){
+          this.renderer.dispose();
+        }
+        if(this.ctx){
+          this.ctx.revert();
+        }
+      }
   onCardMouseMove(e: MouseEvent, cardElement: HTMLElement) {
     this.ngZone.runOutsideAngular(() => {
       const light = cardElement.querySelector('.card-light') as HTMLElement | null;
