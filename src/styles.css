@@ -5,11 +5,6 @@
 html,body{
     scroll-behavior: smooth;
     overflow-x: hidden;
-    background: radial-gradient(
-         #F5ECE1 0%,
-       #E2D0B9 60%,
-       #D2B799 100%
-    )   
 }
 
 #smooth-wrapper{

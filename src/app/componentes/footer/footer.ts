@@ -29,7 +29,7 @@ export class Footer {
       {
       title:'Telefone',
       links:[
-        {name:'Whatsapp', icon: 'whatsapp', url:'https://www.instagram.com/mica.brigs/'}
+        {name:'Whatsapp', icon: 'whatsapp', url:'https://api.whatsapp.com/send/?phone=5511982524269&text=Oi&type=phone_number&app_absent=0&utm_source=ig'}
       ]
     },
   ];

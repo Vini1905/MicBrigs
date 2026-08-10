@@ -1,15 +1,10 @@
 .store {
-    background: linear-gradient(
-        135deg,
-        #DFBC92 0%,
-        #CCA373 50%,
-        #EAD9C5 100%
-    );
     padding: 40px 16px 60px;
     width: 100%;
     min-height: 100vh;
     position: relative;
     overflow: visible !important;
+    background-color: #F9F9F8;
 }
 
 /* CONTAINER DA ANIMAÇÃO DE SCROLL DO 3D */
@@ -160,8 +155,8 @@
     margin-top: 100px;
     color: #C08552;
     position: relative;
-    background-color: rgba(255, 255, 255, 0.079);
-    width: 400px;
+    background-color: rgba(199, 196, 196, 0.079);
+    width: 600px;
     padding: 2px;
     box-sizing: border-box;
     border-radius: 24px;
@@ -235,7 +230,7 @@ a { color: white; }
     max-width: 950px;
     min-height: auto;
     padding: 32px;
-    background: rgba(255, 255, 255, 0.12);
+    background-color: rgba(255, 255, 255, 0.12);
     backdrop-filter: blur(12px);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
     display: flex;
@@ -440,11 +435,12 @@ button:active {
 
     .card, .card-brownie {
         width: 50%;
-        max-width: 580px;
+        max-width: 600px;
         min-height: 220px;
         display: flex;
         box-sizing: border-box;
         position: relative;
+        background: rgba(208, 206, 206, 0.6);
     }
 
     .action-container {
