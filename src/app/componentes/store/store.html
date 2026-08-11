@@ -1,106 +1,164 @@
 <section class="store" id="app-store">
+  <!-- COOKIES -->
   <h1 class="app-title">Cookies</h1>
   <div class="brigs">
-    @for (produto of cookies; track produto.id) {
-      <div class="card" #cardCookie (mousemove)="onCardMouseMove($event, cardCookie)" (mouseleave)="onCardMouseLeave(cardCookie)">
-        <div class="card-light"></div>
-        <div class="conteudo">
-          <div class="cesta-3d-wrapper">
-            <div #canvasContainer class="canvas-container"></div>
-          </div>
-          <div class="card-info">
-            <h2>{{produto.nome}}</h2>
-            <h3>{{produto.desc}}</h3>
-            <div class="action-container">
-              <ul class="menu-links">
-                <li (click)="toggleDropdown(produto,$event)">
-                  {{produto.selectedBox || 'Pacote com 1 Cookie'}}
-                  <ul class="dropdown" [class.active]="produto.dropdownOpen">
-                    <li (click)="selectBox(produto, 'Pacote com 1 Cookie', $event)">Pacote com 1 Cookie</li>
-                    <li (click)="selectBox(produto, 'Pacote com 3 Cookies', $event)">Pacote com 3 Cookies</li>
-                    <li (click)="selectBox(produto, 'Pacote com 6 Cookies', $event)">Pacote com 6 Cookies</li>
-                    <li (click)="selectBox(produto, 'Pacote com 12 Cookies', $event)">Pacote com 12 Cookies</li>
-                  </ul>
-                </li>
-              </ul>
-              <button class="shop-btn" (click)="addToCart(produto)">AD. AO CARRINHO</button>
+    @if (isLoading) {
+      @for (item of [1, 2]; track $index) {
+        <div class="card card-skeleton">
+          <div class="conteudo">
+            <div class="skeleton-img shimmer"></div>
+            <div class="card-info">
+              <div class="skeleton-title shimmer"></div>
+              <div class="skeleton-desc shimmer"></div>
+              <div class="action-container">
+                <div class="skeleton-btn shimmer"></div>
+                <div class="skeleton-btn shimmer"></div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    } @empty {
-      <p>Nenhum cookie disponível no momento.</p>
+      }
+    } @else {
+      @for (produto of cookies; track produto.id) {
+        <div class="card" #cardCookie (mousemove)="onCardMouseMove($event, cardCookie)" (mouseleave)="onCardMouseLeave(cardCookie)">
+          <div class="card-light"></div>
+          <div class="conteudo">
+            <div class="cesta-3d-wrapper">
+              <div #canvasContainer class="canvas-container"></div>
+            </div>
+            <div class="card-info">
+              <h2>{{produto.nome}}</h2>
+              <h3>{{produto.desc}}</h3>
+              <div class="action-container">
+                <ul class="menu-links">
+                  <li (click)="toggleDropdown(produto,$event)">
+                    {{produto.selectedBox || 'Pacote com 1 Cookie'}}
+                    <ul class="dropdown" [class.active]="produto.dropdownOpen">
+                      <li (click)="selectBox(produto, 'Pacote com 1 Cookie', $event)">Pacote com 1 Cookie</li>
+                      <li (click)="selectBox(produto, 'Pacote com 3 Cookies', $event)">Pacote com 3 Cookies</li>
+                      <li (click)="selectBox(produto, 'Pacote com 6 Cookies', $event)">Pacote com 6 Cookies</li>
+                      <li (click)="selectBox(produto, 'Pacote com 12 Cookies', $event)">Pacote com 12 Cookies</li>
+                    </ul>
+                  </li>
+                </ul>
+                <button class="shop-btn" (click)="addToCart(produto)">AD. AO CARRINHO</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      } @empty {
+        <p>Nenhum cookie disponível no momento.</p>
+      }
     }
   </div>
 
+  <!-- BRIGADEIROS -->
   <h1 class="app-title">Brigadeiros</h1>
   <div class="brigs">
-    @for (produto of brigadeiros; track produto.id) {
-      <div class="card" #cardBrig (mousemove)="onCardMouseMove($event, cardBrig)" (mouseleave)="onCardMouseLeave(cardBrig)">
-        <div class="card-light"></div>
-        <div class="conteudo">
-          <img class="img" [src]="produto.img" [alt]="produto.nome">
-          <div class="card-info">
-            <h2>{{produto.nome}}</h2>
-            <h3>{{produto.desc}}</h3>
-            <div class="action-container">
-              <ul class="menu-links">
-                <li (click)="toggleDropdown(produto,$event)">
-                  {{produto.selectedBox || 'Caixa de 4 brigadeiros'}}
-                  <ul class="dropdown" [class.active]="produto.dropdownOpen">
-                    <li (click)="selectBox(produto, 'Caixa de 4 brigadeiros', $event)">Caixa de 4 brigadeiros</li>
-                    <li (click)="selectBox(produto, 'Caixa de 6 brigadeiros', $event)">Caixa de 6 brigadeiros</li>
-                    <li (click)="selectBox(produto, 'Caixa de 12 brigadeiros', $event)">Caixa de 12 brigadeiros</li>
-                    <li (click)="selectBox(produto, 'Caixa de 25 brigadeiros', $event)">Caixa de 25 brigadeiros</li>
-                    <li (click)="selectBox(produto, 'Caixa de 50 brigadeiros', $event)">Caixa de 50 brigadeiros</li>
-                    <li (click)="selectBox(produto, 'Caixa de 100 brigadeiros', $event)">Caixa de 100 brigadeiros</li>
-                  </ul>
-                </li>
-              </ul>
-              <button class="shop-btn" (click)="addToCart(produto)">AD. AO CARRINHO</button>
+    @if (isLoading) {
+      @for (item of [1, 2, 3, 4]; track $index) {
+        <div class="card card-skeleton">
+          <div class="conteudo">
+            <div class="skeleton-img shimmer"></div>
+            <div class="card-info">
+              <div class="skeleton-title shimmer"></div>
+              <div class="skeleton-desc shimmer"></div>
+              <div class="action-container">
+                <div class="skeleton-btn shimmer"></div>
+                <div class="skeleton-btn shimmer"></div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    } @empty {
-      <p>Nenhum brigadeiro disponível no momento.</p>
+      }
+    } @else {
+      @for (produto of brigadeiros; track produto.id) {
+        <div class="card" #cardBrig (mousemove)="onCardMouseMove($event, cardBrig)" (mouseleave)="onCardMouseLeave(cardBrig)">
+          <div class="card-light"></div>
+          <div class="conteudo">
+            <img class="img" [src]="produto.img" [alt]="produto.nome" loading="lazy">
+            <div class="card-info">
+              <h2>{{produto.nome}}</h2>
+              <h3>{{produto.desc}}</h3>
+              <div class="action-container">
+                <ul class="menu-links">
+                  <li (click)="toggleDropdown(produto,$event)">
+                    {{produto.selectedBox || 'Caixa de 4 brigadeiros'}}
+                    <ul class="dropdown" [class.active]="produto.dropdownOpen">
+                      <li (click)="selectBox(produto, 'Caixa de 4 brigadeiros', $event)">Caixa de 4 brigadeiros</li>
+                      <li (click)="selectBox(produto, 'Caixa de 6 brigadeiros', $event)">Caixa de 6 brigadeiros</li>
+                      <li (click)="selectBox(produto, 'Caixa de 12 brigadeiros', $event)">Caixa de 12 brigadeiros</li>
+                      <li (click)="selectBox(produto, 'Caixa de 25 brigadeiros', $event)">Caixa de 25 brigadeiros</li>
+                      <li (click)="selectBox(produto, 'Caixa de 50 brigadeiros', $event)">Caixa de 50 brigadeiros</li>
+                      <li (click)="selectBox(produto, 'Caixa de 100 brigadeiros', $event)">Caixa de 100 brigadeiros</li>
+                    </ul>
+                  </li>
+                </ul>
+                <button class="shop-btn" (click)="addToCart(produto)">AD. AO CARRINHO</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      } @empty {
+        <p>Nenhum brigadeiro disponível no momento.</p>
+      }
     }
   </div>
 
+  <!-- BROWNIES -->
   <h1 class="app-title">Brownies</h1>
   <div class="brigs-br">
-    @for (produto of brownies; track produto.id) {
-      <div class="card-brownie" #cardBrownie (mousemove)="onCardMouseMove($event, cardBrownie)" (mouseleave)="onCardMouseLeave(cardBrownie)">
-        <div class="card-light"></div>
-        <div class="conteudo">
-          <img class="img" [src]="produto.img" [alt]="produto.nome">
-          <div class="card-info">
-            <h2>{{produto.nome}}</h2>
-            <h3>{{produto.desc}}</h3>
-            <div class="action-container">
-              <ul class="menu-links">
-                <li (click)="toggleDropdown(produto,$event)">
-                  {{produto.selectedBox || 'Caixa de 4 brownies'}}
-                  <ul class="dropdown" [class.active]="produto.dropdownOpen">
-                    <li (click)="selectBox(produto, 'Caixa de 4 brownies', $event)">Caixa de 4 brownies</li>
-                    <li (click)="selectBox(produto, 'Caixa de 6 brownies', $event)">Caixa de 6 brownies</li>
-                    <li (click)="selectBox(produto, 'Caixa de 12 brownies', $event)">Caixa de 12 brownies</li>
-                    <li (click)="selectBox(produto, 'Caixa de 25 brownies', $event)">Caixa de 25 brownies</li>
-                    <li (click)="selectBox(produto, 'Caixa de 50 brownies', $event)">Caixa de 50 brownies</li>
-                    <li (click)="selectBox(produto, 'Caixa de 100 brownies', $event)">Caixa de 100 brownies</li>
-                  </ul>
-                </li>
-              </ul>
-              <button class="shop-btn" (click)="addToCart(produto)">AD. AO CARRINHO</button>
+    @if (isLoading) {
+      @for (item of [1, 2]; track $index) {
+        <div class="card-brownie card-skeleton">
+          <div class="conteudo">
+            <div class="skeleton-img shimmer"></div>
+            <div class="card-info">
+              <div class="skeleton-title shimmer"></div>
+              <div class="skeleton-desc shimmer"></div>
+              <div class="action-container">
+                <div class="skeleton-btn shimmer"></div>
+                <div class="skeleton-btn shimmer"></div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    } @empty {
-      <p>Nenhum brownie disponível no momento.</p>
+      }
+    } @else {
+      @for (produto of brownies; track produto.id) {
+        <div class="card-brownie" #cardBrownie (mousemove)="onCardMouseMove($event, cardBrownie)" (mouseleave)="onCardMouseLeave(cardBrownie)">
+          <div class="card-light"></div>
+          <div class="conteudo">
+            <img class="img" [src]="produto.img" [alt]="produto.nome" loading="lazy">
+            <div class="card-info">
+              <h2>{{produto.nome}}</h2>
+              <h3>{{produto.desc}}</h3>
+              <div class="action-container">
+                <ul class="menu-links">
+                  <li (click)="toggleDropdown(produto,$event)">
+                    {{produto.selectedBox || 'Caixa de 4 brownies'}}
+                    <ul class="dropdown" [class.active]="produto.dropdownOpen">
+                      <li (click)="selectBox(produto, 'Caixa de 4 brownies', $event)">Caixa de 4 brownies</li>
+                      <li (click)="selectBox(produto, 'Caixa de 6 brownies', $event)">Caixa de 6 brownies</li>
+                      <li (click)="selectBox(produto, 'Caixa de 12 brownies', $event)">Caixa de 12 brownies</li>
+                      <li (click)="selectBox(produto, 'Caixa de 25 brownies', $event)">Caixa de 25 brownies</li>
+                      <li (click)="selectBox(produto, 'Caixa de 50 brownies', $event)">Caixa de 50 brownies</li>
+                      <li (click)="selectBox(produto, 'Caixa de 100 brownies', $event)">Caixa de 100 brownies</li>
+                    </ul>
+                  </li>
+                </ul>
+                <button class="shop-btn" (click)="addToCart(produto)">AD. AO CARRINHO</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      } @empty {
+        <p>Nenhum brownie disponível no momento.</p>
+      }
     }
   </div>
 
+  <!-- CESTAS -->
   <h1 class="app-title">Cestas</h1>
   <div class="carousel-wrapper">
     <div class="arrow">
@@ -116,44 +174,60 @@
       </button>
     </div>
 
-    @for (produto of cestas; track produto.id) {
-      <div #carouselItem class="carousel-content" [class.item-active]="$first" [class.item]="!$first">
-        <div class="card card-destaque" #cardCesta (mousemove)="onCardMouseMove($event, cardCesta)" (mouseleave)="onCardMouseLeave(cardCesta)">
-          <div class="card-light"></div>
-          <div class="conteudo">
-            <div class="img-container">
-              <svg class="curved-badge" viewBox="0 0 160 80" xmlns="http://www.w3.org/2000/svg">
-                <path id="cestaCurve" d="M 10,70 A 70,70 0 0,1 150,70" fill="none" />
-                <text>
-                  <textPath href="#cestaCurve" startOffset="50%" text-anchor="middle">
-                    PARA COMPARTILHAR
-                  </textPath>
-                </text>
-              </svg>
-              <img class="img-cesta" [src]="produto.img" [alt]="produto.nome">
-            </div>
-            
-            <div class="card-info">
-              <h2>{{produto.nome}}</h2>
-              <h3>{{produto.desc}}</h3>
-              <div class="action-container">
-                <ul class="menu-links">
-                  <li (click)="toggleDropdown(produto,$event)">
-                    {{produto.selectedBox || 'Cesta Inteira'}}
-                    <ul class="dropdown" [class.active]="produto.dropdownOpen">
-                      <li (click)="selectBox(produto, 'Cesta Especial', $event)">Cesta Especial</li>
-                      <li (click)="selectBox(produto, 'Cesta Inteira', $event)">Cesta Inteira</li>
-                    </ul>
-                  </li>
-                </ul>
-                <button class="shop-btn" (click)="addToCart(produto)">AD. AO CARRINHO</button>
-              </div>
+    @if (isLoading) {
+      <div class="card card-destaque card-skeleton">
+        <div class="conteudo">
+          <div class="skeleton-img shimmer" style="width: 220px; height: 220px;"></div>
+          <div class="card-info">
+            <div class="skeleton-title shimmer"></div>
+            <div class="skeleton-desc shimmer"></div>
+            <div class="action-container">
+              <div class="skeleton-btn shimmer"></div>
+              <div class="skeleton-btn shimmer"></div>
             </div>
           </div>
         </div>
       </div>
-    } @empty {
-      <p>Nenhuma cesta disponível no momento.</p>
+    } @else {
+      @for (produto of cestas; track produto.id) {
+        <div #carouselItem class="carousel-content" [class.item-active]="$first" [class.item]="!$first">
+          <div class="card card-destaque" #cardCesta (mousemove)="onCardMouseMove($event, cardCesta)" (mouseleave)="onCardMouseLeave(cardCesta)">
+            <div class="card-light"></div>
+            <div class="conteudo">
+              <div class="img-container">
+                <svg class="curved-badge" viewBox="0 0 160 80" xmlns="http://www.w3.org/2000/svg">
+                  <path id="cestaCurve" d="M 10,70 A 70,70 0 0,1 150,70" fill="none" />
+                  <text>
+                    <textPath href="#cestaCurve" startOffset="50%" text-anchor="middle">
+                      PARA COMPARTILHAR
+                    </textPath>
+                  </text>
+                </svg>
+                <img class="img-cesta" [src]="produto.img" [alt]="produto.nome" loading="lazy">
+              </div>
+              
+              <div class="card-info">
+                <h2>{{produto.nome}}</h2>
+                <h3>{{produto.desc}}</h3>
+                <div class="action-container">
+                  <ul class="menu-links">
+                    <li (click)="toggleDropdown(produto,$event)">
+                      {{produto.selectedBox || 'Cesta Inteira'}}
+                      <ul class="dropdown" [class.active]="produto.dropdownOpen">
+                        <li (click)="selectBox(produto, 'Cesta Especial', $event)">Cesta Especial</li>
+                        <li (click)="selectBox(produto, 'Cesta Inteira', $event)">Cesta Inteira</li>
+                      </ul>
+                    </li>
+                  </ul>
+                  <button class="shop-btn" (click)="addToCart(produto)">AD. AO CARRINHO</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      } @empty {
+        <p>Nenhuma cesta disponível no momento.</p>
+      }
     }
   </div>
 </section>
