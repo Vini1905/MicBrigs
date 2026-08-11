@@ -69,9 +69,9 @@ export class Store implements AfterViewInit, OnDestroy {
     'Cesta Inteira': 120.00,
     'Cesta Especial': 18.00,
     'Pacote com 1 Cookie' : 13.00,
-    'Pacote com 3 CookieS' : 13.00,
-    'Pacote com 6 CookieS' : 13.00,
-    'Pacote com 12 CookieS' : 13.00,
+    'Pacote com 3 Cookies' : 13.00,
+    'Pacote com 6 Cookies' : 13.00,
+    'Pacote com 12 Cookies' : 13.00,
 
 
   };
@@ -348,22 +348,62 @@ export class Store implements AfterViewInit, OnDestroy {
       categoria: 'brigadeiro',
       selectedBox: 'Caixa de 4 brigadeiros'
     },
-    {
+       {
       id: 6,
+      nome: 'Brigadeiro de Oreo',
+      img: 'BO.png',
+      desc: 'O equilíbrio perfeito entre o doce do caramelo artesanal e uma delicada pitada de flor de sal.',
+      categoria: 'brigadeiro',
+      selectedBox: 'Caixa de 4 brigadeiros'
+    },
+       {
+      id: 7,
+      nome: 'Brigadeiro Caramelo Salgado',
+      img: 'BCS.png',
+      desc: 'O equilíbrio perfeito entre o doce do caramelo artesanal e uma delicada pitada de flor de sal.',
+      categoria: 'brigadeiro',
+      selectedBox: 'Caixa de 4 brigadeiros'
+    },
+       {
+      id: 8,
+      nome: 'Brigadeiro Caramelo Salgado',
+      img: 'BE.png',
+      desc: 'O equilíbrio perfeito entre o doce do caramelo artesanal e uma delicada pitada de flor de sal.',
+      categoria: 'brigadeiro',
+      selectedBox: 'Caixa de 4 brigadeiros'
+    },
+       {
+      id: 9,
+      nome: 'Brigadeiro Caramelo Salgado',
+      img: 'BN.png',
+      desc: 'O equilíbrio perfeito entre o doce do caramelo artesanal e uma delicada pitada de flor de sal.',
+      categoria: 'brigadeiro',
+      selectedBox: 'Caixa de 4 brigadeiros'
+    },
+           {
+      id: 10,
+      nome: 'Brigadeiro Caramelo Salgado',
+      img: 'BR.png',
+      desc: 'O equilíbrio perfeito entre o doce do caramelo artesanal e uma delicada pitada de flor de sal.',
+      categoria: 'brigadeiro',
+      selectedBox: 'Caixa de 4 brigadeiros'
+    },
+    {
+      id: 11,
       nome: 'Brownie de Ovomaltine',
       img: 'BWC.png',
       desc: 'O equilíbrio perfeito entre o doce do caramelo artesanal e uma delicada pitada de flor de sal.',
       categoria: 'brownie',
     },
     {
-      id: 7,
+      id: 12,
       nome: 'Brownie de Doce de Leite',
       img: 'BWDL.png',
       desc: 'O equilíbrio perfeito entre o doce do caramelo artesanal e uma delicada pitada de flor de sal.',
       categoria: 'brownie',
     },
     {
-      id: 8,
+      id: 13,
       nome: 'Cesta Inteira',
       img: 'CS.png',
       desc: 'O equilíbrio perfeito entre o doce do caramelo artesanal e uma delicada pitada de flor de sal.',
@@ -371,7 +411,7 @@ export class Store implements AfterViewInit, OnDestroy {
       selectedBox: 'Cesta Inteira'
     },
     {
-      id: 9,
+      id: 14,
       nome: 'Cesta',
       img: 'C2.png',
       desc: 'O equilíbrio perfeito entre o doce do caramelo artesanal e uma delicada pitada de flor de sal.',
@@ -379,7 +419,7 @@ export class Store implements AfterViewInit, OnDestroy {
       selectedBox: 'Cesta Inteira'
     },
     {
-      id: 10,
+      id: 15,
       nome: 'Cesta',
       img: 'C3.png',
       desc: 'O equilíbrio perfeito entre o doce do caramelo artesanal e uma delicada pitada de flor de sal.',
