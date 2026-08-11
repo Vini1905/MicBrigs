@@ -1,17 +1,17 @@
 <section class="store" id="app-store">
   <h1 class="app-title">Cookies</h1>
-    <div class="brigs">
-    @for (produto of cookies; track produto.id){
-            <div class="card" #cardCookie (mousemove)="onCardMouseMove($event, cardCookie)" (mouseleave)="onCardMouseLeave(cardCookie)">
-                      <div class="card-light"></div>
+  <div class="brigs">
+    @for (produto of cookies; track produto.id) {
+      <div class="card" #cardCookie (mousemove)="onCardMouseMove($event, cardCookie)" (mouseleave)="onCardMouseLeave(cardCookie)">
+        <div class="card-light"></div>
         <div class="conteudo">
-  <div class="cesta-3d-wrapper">
-    <div #canvasContainer class="canvas-container"></div>
-  </div>
-  <div class="card-info">
-       <h2>{{produto.nome}}</h2>
+          <div class="cesta-3d-wrapper">
+            <div #canvasContainer class="canvas-container"></div>
+          </div>
+          <div class="card-info">
+            <h2>{{produto.nome}}</h2>
             <h3>{{produto.desc}}</h3>
-                   <div class="action-container">
+            <div class="action-container">
               <ul class="menu-links">
                 <li (click)="toggleDropdown(produto,$event)">
                   {{produto.selectedBox || 'Pacote com 1 Cookie'}}
@@ -32,19 +32,17 @@
       <p>Nenhum cookie disponível no momento.</p>
     }
   </div>
+
   <h1 class="app-title">Brigadeiros</h1>
   <div class="brigs">
     @for (produto of brigadeiros; track produto.id) {
       <div class="card" #cardBrig (mousemove)="onCardMouseMove($event, cardBrig)" (mouseleave)="onCardMouseLeave(cardBrig)">
         <div class="card-light"></div>
-        
         <div class="conteudo">
           <img class="img" [src]="produto.img" [alt]="produto.nome">
-          
           <div class="card-info">
             <h2>{{produto.nome}}</h2>
             <h3>{{produto.desc}}</h3>
-            
             <div class="action-container">
               <ul class="menu-links">
                 <li (click)="toggleDropdown(produto,$event)">
@@ -62,7 +60,6 @@
               <button class="shop-btn" (click)="addToCart(produto)">AD. AO CARRINHO</button>
             </div>
           </div>
-
         </div>
       </div>
     } @empty {
@@ -75,14 +72,11 @@
     @for (produto of brownies; track produto.id) {
       <div class="card-brownie" #cardBrownie (mousemove)="onCardMouseMove($event, cardBrownie)" (mouseleave)="onCardMouseLeave(cardBrownie)">
         <div class="card-light"></div>
-        
         <div class="conteudo">
           <img class="img" [src]="produto.img" [alt]="produto.nome">
-          
           <div class="card-info">
             <h2>{{produto.nome}}</h2>
             <h3>{{produto.desc}}</h3>
-            
             <div class="action-container">
               <ul class="menu-links">
                 <li (click)="toggleDropdown(produto,$event)">
@@ -100,7 +94,6 @@
               <button class="shop-btn" (click)="addToCart(produto)">AD. AO CARRINHO</button>
             </div>
           </div>
-
         </div>
       </div>
     } @empty {
@@ -110,7 +103,6 @@
 
   <h1 class="app-title">Cestas</h1>
   <div class="carousel-wrapper">
-    
     <div class="arrow">
       <button id="prev" (click)="prev()">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
@@ -119,7 +111,7 @@
       </button>
       <button id="next" (click)="next()">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
-          <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
+          <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
         </svg>
       </button>
     </div>
@@ -128,7 +120,6 @@
       <div #carouselItem class="carousel-content" [class.item-active]="$first" [class.item]="!$first">
         <div class="card card-destaque" #cardCesta (mousemove)="onCardMouseMove($event, cardCesta)" (mouseleave)="onCardMouseLeave(cardCesta)">
           <div class="card-light"></div>
-          
           <div class="conteudo">
             <div class="img-container">
               <svg class="curved-badge" viewBox="0 0 160 80" xmlns="http://www.w3.org/2000/svg">
@@ -145,7 +136,6 @@
             <div class="card-info">
               <h2>{{produto.nome}}</h2>
               <h3>{{produto.desc}}</h3>
-              
               <div class="action-container">
                 <ul class="menu-links">
                   <li (click)="toggleDropdown(produto,$event)">
@@ -158,12 +148,12 @@
                 </ul>
                 <button class="shop-btn" (click)="addToCart(produto)">AD. AO CARRINHO</button>
               </div>
-            </div> </div> </div>
+            </div>
+          </div>
+        </div>
       </div>
     } @empty {
       <p>Nenhuma cesta disponível no momento.</p>
     }
-
   </div>
-  
 </section>
