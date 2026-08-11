@@ -43,7 +43,7 @@ export interface Cookie extends Produto {
   styleUrl: './store.css',
 })
 export class Store implements AfterViewInit, OnDestroy {
-  isLoading: boolean = true;
+  isLoading: boolean = false;
   @ViewChild('canvasContainer', { static: false }) canvasContainer!: ElementRef<HTMLDivElement>;
   
   private scene!: THREE.Scene;
@@ -105,7 +105,7 @@ export class Store implements AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     setTimeout(() =>{
       this.isLoading = false;
-    },800);
+    },500);
     if (isPlatformBrowser(this.platformId)) {
       
       this.ngZone.runOutsideAngular(() => {
