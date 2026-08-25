@@ -9,8 +9,8 @@
     animation: shimmer 1.5s infinite linear;
 }
 @keyframes shimmer{
-    0% {background-postiion: -200% 0; }
-    100% {background-postiion: -200% 0; }
+    0% {background-position: -200% 0; }
+    100% {background-position: -200% 0; }
 
 }
 .card-skeleton{
@@ -49,7 +49,7 @@
     min-height: 100vh;
     position: relative;
     overflow-x: hidden  !important;
-    background-color: #F9F9F8;
+    background: linear-gradient(to right, #fa709a 0%, #fee140 100%);
     box-sizing: border-box;
 }
 
@@ -203,7 +203,7 @@
 .card, .card-brownie {
     font-family: "Inter", sans-serif;
     margin-top: 40px;
-    color: #C08552;
+    color: #28262686;
     position: relative;
     background-color: rgba(199, 196, 196, 0.079);
     min-width: 800px;

@@ -1,5 +1,5 @@
 .main-footer{
-    background-color: #eceff1;
+    background:linear-gradient(to top, #a8edea 0%, #fed6e3 100%);
 font-family: "Inter", sans-serif;
 padding:40px 16px 24px;
 }

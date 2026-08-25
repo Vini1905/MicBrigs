@@ -1,4 +1,7 @@
+.hero{
+        background: linear-gradient(180deg, #f598bd 50%, #E3EEFF 100%);
 
+}
 .list{
     position: relative;
     margin: 0 auto;
