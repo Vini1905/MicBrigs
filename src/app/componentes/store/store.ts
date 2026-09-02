@@ -48,7 +48,7 @@ export class Store implements AfterViewInit, OnDestroy {
       id: 1,
       nome: 'Bolo Trufado com Frutas Vermelhas',
       desc: 'Massa intensa de cacau com brigadeiro gourmet, morangos frescos e amoras douradas.',
-      img: 'BPFV.png',
+      img: 'BFV.png',
       selectedBox: 'Bolo Pequeno (10 fatias)',
       dropdownOpen: false
     },
