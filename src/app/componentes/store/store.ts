@@ -48,7 +48,7 @@ export class Store implements AfterViewInit, OnDestroy {
       id: 1,
       nome: 'Bolo Trufado com Frutas Vermelhas',
       desc: 'Massa intensa de cacau com brigadeiro gourmet, morangos frescos e amoras douradas.',
-      img: 'caminho/para/bolo-chocolate.jpg',
+      img: 'BPFV.png',
       selectedBox: 'Bolo Pequeno (10 fatias)',
       dropdownOpen: false
     },
@@ -56,7 +56,15 @@ export class Store implements AfterViewInit, OnDestroy {
       id: 2,
       nome: 'Bolo Delícia de Morango e Chocolate Branco',
       desc: 'Pão de ló leve com chantilly fresco, raspas de chocolate branco nobre e morangos.',
-      img: 'caminho/para/bolo-branco.jpg',
+      img: 'BDL.png',
+      selectedBox: 'Bolo Pequeno (10 fatias)',
+      dropdownOpen: false
+    },
+      {
+      id: 3,
+      nome: 'Bolo Delícia de Morango e Chocolate Branco',
+      desc: 'Pão de ló leve com chantilly fresco, raspas de chocolate branco nobre e morangos.',
+      img: 'BDC.png',
       selectedBox: 'Bolo Pequeno (10 fatias)',
       dropdownOpen: false
     }
