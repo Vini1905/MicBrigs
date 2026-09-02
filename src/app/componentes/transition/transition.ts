@@ -34,7 +34,7 @@ import { CommonModule } from '@angular/common';
     }
     .transition-block{
       flex:1;
-      background-color: #322114;
+      background: linear-gradient(180deg, #E3EEFF  0%, #f598bd 90%);
       transform:scaleX(0);
       will-change:transform;
     }
