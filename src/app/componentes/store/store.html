@@ -1,6 +1,13 @@
 <section class="store" id="app-store">
+
   <!-- COOKIES -->
-  <h1 class="app-title">Cookies</h1>
+<h1 class="app-title">
+  <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" class="bi bi-cookie title-svg" viewBox="0 0 16 16">
+    <path d="M6 7.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m4.5.5a1 1 0 1 0 0-2 1 1 0 0 0 0 2m-.5 3.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0"/>
+    <path d="M8 0a7.96 7.96 0 0 0-4.075 1.114q-.245.102-.437.28A8 8 0 1 0 8 0m3.25 14.201a1.5 1.5 0 0 0-2.13.71A7 7 0 0 1 8 15a7 7 0 0 1-6.525-4.453 1.5 1.5 0 0 0 1.02-1.397V8.5a1.5 1.5 0 0 0-1.5-1.5h-.08A7 7 0 0 1 7.5 1.05a1.5 1.5 0 0 0 1.5 1.45v.5a1.5 1.5 0 0 0 1.5 1.5h.5a1.5 1.5 0 0 0 1.5-1.5v-.06a7 7 0 0 1 2.378 2.378A1.5 1.5 0 0 0 14.5 6.5h.5a1.5 1.5 0 0 0 1.5-1.5v-.08A7 7 0 0 1 14.95 7.5a1.5 1.5 0 0 0-1.45 1.5v.5a1.5 1.5 0 0 0-1.5 1.5h-.5a1.5 1.5 0 0 0-1.5 1.5v.06q.66.57 1.25 1.141"/>
+  </svg>
+  Cookies
+</h1>
   <div class="brigs">
     @if (isLoading) {
       @for (item of [1, 2]; track $index) {
@@ -31,7 +38,7 @@
               <h3>{{produto.desc}}</h3>
               <div class="action-container">
                 <ul class="menu-links">
-                  <li (click)="toggleDropdown(produto,$event)">
+                  <li (click)="toggleDropdown(produto, $event)">
                     {{produto.selectedBox || 'Pacote com 1 Cookie'}}
                     <ul class="dropdown" [class.active]="produto.dropdownOpen">
                       <li (click)="selectBox(produto, 'Pacote com 1 Cookie', $event)">Pacote com 1 Cookie</li>
@@ -82,7 +89,7 @@
               <h3>{{produto.desc}}</h3>
               <div class="action-container">
                 <ul class="menu-links">
-                  <li (click)="toggleDropdown(produto,$event)">
+                  <li (click)="toggleDropdown(produto, $event)">
                     {{produto.selectedBox || 'Caixa de 4 brigadeiros'}}
                     <ul class="dropdown" [class.active]="produto.dropdownOpen">
                       <li (click)="selectBox(produto, 'Caixa de 4 brigadeiros', $event)">Caixa de 4 brigadeiros</li>
@@ -135,7 +142,7 @@
               <h3>{{produto.desc}}</h3>
               <div class="action-container">
                 <ul class="menu-links">
-                  <li (click)="toggleDropdown(produto,$event)">
+                  <li (click)="toggleDropdown(produto, $event)">
                     {{produto.selectedBox || 'Caixa de 4 brownies'}}
                     <ul class="dropdown" [class.active]="produto.dropdownOpen">
                       <li (click)="selectBox(produto, 'Caixa de 4 brownies', $event)">Caixa de 4 brownies</li>
@@ -154,6 +161,62 @@
         </div>
       } @empty {
         <p>Nenhum brownie disponível no momento.</p>
+      }
+    }
+  </div>
+
+  <!-- BOLOS -->
+  <h1 class="app-title">
+    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" class="bi bi-cake title-svg" viewBox="0 0 16 16">
+      <path d="m7.994.013-.595.79a.747.747 0 0 0 .101 1.01V4H5a2 2 0 0 0-2 2v3H2a2 2 0 0 0-2 2v4a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4a2 2 0 0 0-2-2h-1V6a2 2 0 0 0-2-2H8.5V1.806A.747.747 0 0 0 8.592.802zM4 6a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v.414a.9.9 0 0 1-.646-.268 1.914 1.914 0 0 0-2.708 0 .914.914 0 0 1-1.292 0 1.914 1.914 0 0 0-2.708 0A.9.9 0 0 1 4 6.414zm0 1.414c.49 0 .98-.187 1.354-.56a.914.914 0 0 1 1.292 0c.748.747 1.96.747 2.708 0a.914.914 0 0 1 1.292 0c.374.373.864.56 1.354.56V9H4zM1 11a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v.793l-.354.354a.914.914 0 0 1-1.293 0 1.914 1.914 0 0 0-2.707 0 .914.914 0 0 1-1.292 0 1.914 1.914 0 0 0-2.708 0 .914.914 0 0 1-1.292 0 1.914 1.914 0 0 0-2.708 0 .914.914 0 0 1-1.292 0L1 11.793zm11.646 1.854a1.915 1.915 0 0 0 2.354.279V15H1v-1.867c.737.452 1.715.36 2.354-.28a.914.914 0 0 1 1.292 0c.748.748 1.96.748 2.708 0a.914.914 0 0 1 1.292 0c.748.748 1.96.748 2.707 0a.914.914 0 0 1 1.293 0Z"/>
+    </svg>
+    Bolos
+  </h1>
+  <div class="brigs">
+    @if (isLoading) {
+      @for (item of [1, 2]; track $index) {
+        <div class="card card-skeleton">
+          <div class="conteudo">
+            <div class="skeleton-img shimmer"></div>
+            <div class="card-info">
+              <div class="skeleton-title shimmer"></div>
+              <div class="skeleton-desc shimmer"></div>
+              <div class="action-container">
+                <div class="skeleton-btn shimmer"></div>
+                <div class="skeleton-btn shimmer"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+    } @else {
+      @for (produto of bolos; track produto.id) {
+        <div class="card" #cardBolo (mousemove)="onCardMouseMove($event, cardBolo)" (mouseleave)="onCardMouseLeave(cardBolo)">
+          <div class="card-light"></div>
+          <div class="conteudo">
+            <img class="img" [src]="produto.img" [alt]="produto.nome" loading="lazy">
+            <div class="card-info">
+              <h2>{{produto.nome}}</h2>
+              <h3>{{produto.desc}}</h3>
+              <div class="action-container">
+                <ul class="menu-links">
+                  <li (click)="toggleDropdown(produto, $event)">
+                    {{produto.selectedBox || 'Pedaço Individual'}}
+                    <ul class="dropdown" [class.active]="produto.dropdownOpen">
+                      <li (click)="selectBox(produto, 'Pedaço Individual', $event)">Pedaço Individual</li>
+                      <li (click)="selectBox(produto, 'Bolo Pequeno (10 fatias)', $event)">Bolo Pequeno (10 fatias)</li>
+                      <li (click)="selectBox(produto, 'Bolo Médio (20 fatias)', $event)">Bolo Médio (20 fatias)</li>
+                      <li (click)="selectBox(produto, 'Bolo Inteiro Grande', $event)">Bolo Inteiro Grande</li>
+                    </ul>
+                  </li>
+                </ul>
+                <button class="shop-btn" (click)="addToCart(produto)">AD. AO CARRINHO</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      } @empty {
+        <p>Nenhum bolo disponível no momento.</p>
       }
     }
   </div>
@@ -211,7 +274,7 @@
                 <h3>{{produto.desc}}</h3>
                 <div class="action-container">
                   <ul class="menu-links">
-                    <li (click)="toggleDropdown(produto,$event)">
+                    <li (click)="toggleDropdown(produto, $event)">
                       {{produto.selectedBox || 'Cesta Inteira'}}
                       <ul class="dropdown" [class.active]="produto.dropdownOpen">
                         <li (click)="selectBox(produto, 'Cesta Especial', $event)">Cesta Especial</li>

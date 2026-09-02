@@ -2,6 +2,19 @@
         background: linear-gradient(180deg, #f598bd 50%, #E3EEFF 100%);
 
 }
+
+.hero-img video{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    display:block;
+
+    transform: translateZ(0);
+    will-change:transform;
+
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+}
 .list{
     position: relative;
     margin: 0 auto;

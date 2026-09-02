@@ -43,6 +43,24 @@ export interface Cookie extends Produto {
   styleUrl: './store.css',
 })
 export class Store implements AfterViewInit, OnDestroy {
+  bolos: any[] = [
+    {
+      id: 1,
+      nome: 'Bolo Trufado com Frutas Vermelhas',
+      desc: 'Massa intensa de cacau com brigadeiro gourmet, morangos frescos e amoras douradas.',
+      img: 'caminho/para/bolo-chocolate.jpg',
+      selectedBox: 'Bolo Pequeno (10 fatias)',
+      dropdownOpen: false
+    },
+    {
+      id: 2,
+      nome: 'Bolo Delícia de Morango e Chocolate Branco',
+      desc: 'Pão de ló leve com chantilly fresco, raspas de chocolate branco nobre e morangos.',
+      img: 'caminho/para/bolo-branco.jpg',
+      selectedBox: 'Bolo Pequeno (10 fatias)',
+      dropdownOpen: false
+    }
+  ];
   isLoading: boolean = false;
   @ViewChild('canvasContainer', { static: false }) canvasContainer!: ElementRef<HTMLDivElement>;
   

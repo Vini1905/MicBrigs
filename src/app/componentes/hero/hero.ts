@@ -1,45 +1,61 @@
-import { NgOptimizedImage } from '@angular/common';
-import { Component, ElementRef, QueryList, ViewChildren } from '@angular/core';
+import { Component, ElementRef, QueryList, ViewChildren, ViewChild, AfterViewInit, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
-  standalone:true,
   selector: 'app-hero',
-  imports: [NgOptimizedImage],
+  standalone: true,
   templateUrl: './hero.html',
-  styleUrl: './hero.css',
+  styleUrl: './hero.css'
 })
-export class Hero {
-@ViewChildren('carouselItem') carouselItems!:QueryList<ElementRef<HTMLElement>>;
+export class Hero implements AfterViewInit {
+  @ViewChildren('carouselItem') carouselItems!: QueryList<ElementRef<HTMLElement>>;
+  @ViewChild('brigVideo') brigVideo?: ElementRef<HTMLVideoElement>;
 
-active: number = 0;
+  active: number = 0;
 
-next(): void{
-  const items = this.carouselItems.toArray();
-  const count = items.length;
-   if(count === 0) return;
-    
-  items[this.active].nativeElement.classList.remove('item-active');
-  items[this.active].nativeElement.classList.add('item');
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
-  this.active = this.active >= count - 1 ? 0 : this.active +1
-  
-  items[this.active].nativeElement.classList.remove('item');
-  items[this.active].nativeElement.classList.add('item-active');
-
-   }
-
-   prev(): void{
-  const items = this.carouselItems.toArray();
-  const count = items.length;
-   if(count === 0) return;
-    
-  items[this.active].nativeElement.classList.remove('item-active');
-  items[this.active].nativeElement.classList.add('item');
-
-  this.active = this.active >= count - 1 ? 0 : this.active +1
-  
-  items[this.active].nativeElement.classList.remove('item');
-  items[this.active].nativeElement.classList.add('item-active');
-
-   }
+  ngAfterViewInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      this.playVideoIfActive();
+    }
   }
+
+  next(): void {
+    const items = this.carouselItems.toArray();
+    if (!items.length) return;
+
+    items[this.active].nativeElement.classList.remove('item-active');
+    items[this.active].nativeElement.classList.add('item');
+
+    this.active = this.active >= items.length - 1 ? 0 : this.active + 1;
+
+    items[this.active].nativeElement.classList.remove('item');
+    items[this.active].nativeElement.classList.add('item-active');
+
+    this.playVideoIfActive();
+  }
+
+  prev(): void {
+    const items = this.carouselItems.toArray();
+    if (!items.length) return;
+
+    items[this.active].nativeElement.classList.remove('item-active');
+    items[this.active].nativeElement.classList.add('item');
+
+    this.active = this.active <= 0 ? items.length - 1 : this.active - 1;
+
+    items[this.active].nativeElement.classList.remove('item');
+    items[this.active].nativeElement.classList.add('item-active');
+
+    this.playVideoIfActive();
+  }
+
+  private playVideoIfActive(): void {
+    if (this.active === 0 && this.brigVideo?.nativeElement) {
+      const video = this.brigVideo.nativeElement;
+      video.muted = true;
+      video.play().catch(() => {});
+    }
+  }
+}

@@ -12,7 +12,7 @@
     padding:80px 16px 24px;
     box-sizing: border-box;
     gap:40px;
-        background: linear-gradient(180deg, #E3EEFF  0%, #f598bd 90%,#ffaf1b 100% );
+        background: linear-gradient(180deg, #E3EEFF  0%, #f598bd 90%,#e224a3 100% );
 
 }
 
@@ -35,7 +35,7 @@
 
 
 .text{
-    font-family:"JetBrains Mono", monospace;
+    font-family: "Archivo Black", sans-serif;
  letter-spacing: 0;
  font-weight: 400;
  font-size: 200px;
@@ -139,7 +139,6 @@
     }
     .about-wrapper{
         align-items: start;
-        gap:60px
     }
     .about-wrapper.reverse{
         flex-direction: row-reverse;
