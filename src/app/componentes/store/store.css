@@ -1,3 +1,50 @@
+.floating-items-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* Não interfere nos cliques dos botões */
+  z-index: 1; /* Fica atrás dos cards */
+}
+
+.float-item {
+  position: absolute;
+  pointer-events: none;
+  filter: drop-shadow(0 15px 15px rgba(0, 0, 0, 0.15));
+  will-change: transform;
+}
+
+/* Posições iniciais das partículas ao longo da página */
+.item-cookie-1 {
+  width: 130px;
+  top: 8%;
+  left: 2%;
+}
+
+.item-brigadeiro-1 {
+  width: 110px;
+  top: 28%;
+  right: 3%;
+}
+
+.item-drop-1 {
+  width: 50px;
+  top: 15%;
+  right: 12%;
+}
+
+.item-drop-2 {
+  width: 65px;
+  top: 50%;
+  left: 5%;
+}
+
+.item-granulado-1 {
+  width: 90px;
+  top: 70%;
+  right: 6%;
+}
 .shimmer {
   background: linear-gradient(
     90deg, 
@@ -7,6 +54,17 @@
   );
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite linear;
+}
+.brigs-svg{
+  z-index:4;
+  height:800px;
+    transform: translate(130%, -100%);
+    left: 50%;
+  top: 50%;
+    justify-content: center;
+  align-items: center;
+  filter: grayscale(75%) brightness(1.6);
+
 }
 
 @keyframes shimmer {
@@ -492,7 +550,7 @@ button:hover {
 
   .conteudo img, 
   .card.card-destaque .conteudo img {
-    width: 260px;
+    width: 160px;
     height: 260px;
     object-fit: contain;
     flex-shrink: 0;

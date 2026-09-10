@@ -1,20 +1,33 @@
 import { isPlatformBrowser, NgClass } from '@angular/common';
-import { Component, ElementRef, QueryList, ViewChildren, NgZone, AfterViewInit, OnDestroy, PLATFORM_ID, Inject, inject, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  QueryList,
+  ViewChildren,
+  NgZone,
+  AfterViewInit,
+  OnDestroy,
+  PLATFORM_ID,
+  Inject,
+  inject,
+  ViewChild,
+  ChangeDetectorRef
+} from '@angular/core';
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/all';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { CartService } from '../cart/cart.service';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'; 
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 
-gsap.registerPlugin(ScrollTrigger); 
+gsap.registerPlugin(ScrollTrigger);
 
 export interface Produto {
   id: number;
   nome: string;
   desc: string;
   img: string;
-  categoria: 'brigadeiro' | 'brownie' | 'cesta' |'cookie';
+  categoria: 'brigadeiro' | 'brownie' | 'cesta' | 'cookie';
   selectedBox?: string;
   dropdownOpen?: boolean;
 }
@@ -60,7 +73,7 @@ export class Store implements AfterViewInit, OnDestroy {
       selectedBox: 'Bolo Pequeno (10 fatias)',
       dropdownOpen: false
     },
-      {
+    {
       id: 3,
       nome: 'Bolo Delícia de Morango e Chocolate Branco',
       desc: 'Pão de ló leve com chantilly fresco, raspas de chocolate branco nobre e morangos.',
@@ -69,9 +82,10 @@ export class Store implements AfterViewInit, OnDestroy {
       dropdownOpen: false
     }
   ];
-  isLoading: boolean = false;
+
+  isLoading: boolean = true;
   @ViewChild('canvasContainer', { static: false }) canvasContainer!: ElementRef<HTMLDivElement>;
-  
+
   private scene!: THREE.Scene;
   private camera!: THREE.PerspectiveCamera;
   private renderer!: THREE.WebGLRenderer;
@@ -79,6 +93,7 @@ export class Store implements AfterViewInit, OnDestroy {
   private animationId!: number;
 
   private cartService = inject(CartService);
+  private cdr = inject(ChangeDetectorRef);
   private animationFrameId: number | null = null;
   private ctx!: gsap.Context;
 
@@ -92,14 +107,25 @@ export class Store implements AfterViewInit, OnDestroy {
     'Caixa de 6 brigadeiros': 38.00,
     'Caixa de 12 brigadeiros': 72.00,
     'Caixa de 24 brigadeiros': 72.00,
+    'Caixa de 25 brigadeiros': 75.00,
+    'Caixa de 50 brigadeiros': 140.00,
+    'Caixa de 100 brigadeiros': 260.00,
+    'Caixa de 4 brownies': 28.00,
+    'Caixa de 6 brownies': 42.00,
+    'Caixa de 12 brownies': 80.00,
+    'Caixa de 25 brownies': 160.00,
+    'Caixa de 50 brownies': 300.00,
+    'Caixa de 100 brownies': 580.00,
     'Cesta Inteira': 120.00,
     'Cesta Especial': 18.00,
-    'Pacote com 1 Cookie' : 13.00,
-    'Pacote com 3 Cookies' : 13.00,
-    'Pacote com 6 Cookies' : 13.00,
-    'Pacote com 12 Cookies' : 13.00,
-
-
+    'Pacote com 1 Cookie': 13.00,
+    'Pacote com 3 Cookies': 36.00,
+    'Pacote com 6 Cookies': 70.00,
+    'Pacote com 12 Cookies': 130.00,
+    'Pedaço Individual': 15.00,
+    'Bolo Pequeno (10 fatias)': 75.00,
+    'Bolo Médio (20 fatias)': 130.00,
+    'Bolo Inteiro Grande': 180.00
   };
 
   toggleDropdown(produto: Produto, event: Event) {
@@ -117,8 +143,14 @@ export class Store implements AfterViewInit, OnDestroy {
   }
 
   addToCart(produto: Produto) {
-    const boxSize = produto.selectedBox || (produto.categoria === 'cesta' ? 'Cesta Especial' : 'Caixa de 4 brigadeiros');
-    const price = this.boxPrices[boxSize] || 20.00;
+    let defaultBox = 'Caixa de 4 brigadeiros';
+    if (produto.categoria === 'cesta') defaultBox = 'Cesta Inteira';
+    if (produto.categoria === 'cookie') defaultBox = 'Pacote com 1 Cookie';
+    if (produto.categoria === 'brownie') defaultBox = 'Caixa de 4 brownies';
+
+    const boxSize = produto.selectedBox || defaultBox;
+    const price = this.boxPrices[boxSize] ?? 20.00;
+
     this.cartService.addItem({
       id: produto.id,
       name: produto.nome,
@@ -129,57 +161,78 @@ export class Store implements AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    setTimeout(() =>{
-      this.isLoading = false;
-    },500);
     if (isPlatformBrowser(this.platformId)) {
-      
-      this.ngZone.runOutsideAngular(() => {
-        // Inicializa o contexto principal do GSAP
-        this.ctx = gsap.context(() => {
+      // Finaliza o loading e notifica a Change Detection do Angular
+      setTimeout(() => {
+        this.isLoading = false;
+        this.cdr.detectChanges();
 
-          gsap.utils.toArray<HTMLElement>('.app-title').forEach((title) => {
-            gsap.from(title, {
-              scrollTrigger: {
-                trigger: title,
-                start: 'top 85%',
-                toggleActions: 'play none none reverse',
-              },
-              opacity: 0,
-              y: 50,
-              duration: 1,
-              stagger: 0.15,
-              ease: 'power3.out',
-            });
-          });
-
-          gsap.from('.brigs-br .card-brownie', {
-            scrollTrigger: {
-              trigger: '.brigs-br',
-              start: 'top 80%',
-              toggleActions: 'play none none reverse',
-            },
-            opacity: 0,
-            y: 50,
-            duration: 1,
-            stagger: 0.15,
-            ease: 'power3.out',
-          });
-
-        });
-
-        // Delay para subir a cena 3D após o DOM estar totalmente pronto
-        setTimeout(() => {
-          if (this.canvasContainer) {
-            this.init3DScene();
-          }
-        }, 100);
-      });
+        // Inicializa animações GSAP e 3D após o DOM ser montado
+        this.initAnimationsAnd3D();
+      }, 300);
     }
   }
 
+  private initAnimationsAnd3D(): void {
+    this.ngZone.runOutsideAngular(() => {
+      this.ctx = gsap.context(() => {
+        // 1. Títulos das Seções
+        gsap.utils.toArray<HTMLElement>('.app-title').forEach((title) => {
+          gsap.from(title, {
+            scrollTrigger: {
+              trigger: title,
+              start: 'top 85%',
+              toggleActions: 'play none none reverse',
+            },
+            opacity: 0,
+            y: 40,
+            duration: 0.8,
+            ease: 'power3.out',
+          });
+        });
+
+        // 2. Cards de Brownie
+        gsap.from('.brigs-br .card-brownie', {
+          scrollTrigger: {
+            trigger: '.brigs-br',
+            start: 'top 80%',
+            toggleActions: 'play none none reverse',
+          },
+          opacity: 0,
+          y: 45,
+          duration: 0.8,
+          stagger: 0.15,
+          ease: 'power3.out',
+        });
+
+        // 3. Efeito do Tutorial: Elementos Flutuantes (Cookies, Brigadeiros e Gotas)
+        const tlScroll = gsap.timeline({
+          scrollTrigger: {
+            trigger: '#app-store',
+            start: 'top 85%',
+            end: 'bottom bottom',
+            scrub: 1.2
+          }
+        });
+
+        tlScroll
+          .to('.item-cookie-1', { y: 480, x: 50, rotation: 120, ease: 'none' }, 0)
+          .to('.item-brigadeiro-1', { y: 650, x: -70, rotation: -160, ease: 'none' }, 0)
+          .to('.item-drop-1', { y: 380, scale: 1.25, rotation: 80, ease: 'none' }, 0)
+          .to('.item-drop-2', { y: 520, x: 35, rotation: -100, ease: 'none' }, 0)
+          .to('.item-granulado-1', { y: 420, rotation: 190, ease: 'none' }, 0);
+      });
+
+      // Inicialização da cena 3D
+      setTimeout(() => {
+        if (this.canvasContainer) {
+          this.init3DScene();
+        }
+      }, 100);
+    });
+  }
+
   private init3DScene(): void {
- 
     try {
       if (!this.canvasContainer) return;
 
@@ -194,7 +247,8 @@ export class Store implements AfterViewInit, OnDestroy {
       this.camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
       this.camera.position.set(0, 0, 3);
 
-         try {
+      // 3. RENDERIZADOR
+      try {
         this.renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
         this.renderer.setSize(width, height);
         this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -208,17 +262,8 @@ export class Store implements AfterViewInit, OnDestroy {
         return;
       }
 
-      // 3. RENDERIZADOR
-      this.renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-      this.renderer.setSize(width, height);
-      this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-      this.renderer.outputColorSpace = THREE.SRGBColorSpace;
-
-      container.innerHTML = '';
-      container.appendChild(this.renderer.domElement);
-
-      // 4. ILUMINAÇÃO (Brilho intenso para eliminar sombra preta)
-      const ambientLight = new THREE.AmbientLight(0xffffff, 4.0); 
+      // 4. ILUMINAÇÃO
+      const ambientLight = new THREE.AmbientLight(0xffffff, 4.0);
       this.scene.add(ambientLight);
 
       const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444, 2.5);
@@ -241,14 +286,11 @@ export class Store implements AfterViewInit, OnDestroy {
       dracoLoader.setWorkerLimit(0);
       loader.setDRACOLoader(dracoLoader);
 
-      const caminhoModelo = 'brigs.glb';
-
       loader.load(
-        caminhoModelo, 
+        'brigs.glb',
         (gltf) => {
           this.model = gltf.scene;
 
-          // Aplica textura e habilita reflexo básico
           this.model.traverse((child) => {
             if ((child as THREE.Mesh).isMesh) {
               const mesh = child as THREE.Mesh;
@@ -261,7 +303,6 @@ export class Store implements AfterViewInit, OnDestroy {
             }
           });
 
-          // Estado Inicial: Gigante e centralizado
           this.model.scale.set(1.4, 1.4, 1.4);
           this.model.position.set(0, -0.2, 0);
           this.scene.add(this.model);
@@ -270,32 +311,32 @@ export class Store implements AfterViewInit, OnDestroy {
         (error) => console.error('Erro ao carregar o modelo no Three.js:', error)
       );
 
-      
-
-      // 7. LOOP DE RENDERIZAÇÃO
+      // 6. LOOP DE RENDERIZAÇÃO
       const animate = () => {
         this.animationId = requestAnimationFrame(animate);
-    if (this.model) {
-      this.model.rotation.y +=0.008;
+        if (this.model) {
+          this.model.rotation.y += 0.008;
+        }
+        this.renderer.render(this.scene, this.camera);
+      };
+      animate();
+    } catch (err) {
+      console.error('Erro na cena 3D:', err);
     }
-    this.renderer.render(this.scene, this.camera);
-  };
-  animate();
-}catch(err){
-  console.error('Erro na cena 3D:', err);
-}
   }
-  ngOnDestroy(): void{
-        if(this.animationId){
-          cancelAnimationFrame(this.animationId);
-        }
-        if(this.renderer){
-          this.renderer.dispose();
-        }
-        if(this.ctx){
-          this.ctx.revert();
-        }
-      }
+
+  ngOnDestroy(): void {
+    if (this.animationId) {
+      cancelAnimationFrame(this.animationId);
+    }
+    if (this.renderer) {
+      this.renderer.dispose();
+    }
+    if (this.ctx) {
+      this.ctx.revert();
+    }
+  }
+
   onCardMouseMove(e: MouseEvent, cardElement: HTMLElement) {
     this.ngZone.runOutsideAngular(() => {
       const light = cardElement.querySelector('.card-light') as HTMLElement | null;
@@ -326,11 +367,11 @@ export class Store implements AfterViewInit, OnDestroy {
   }
 
   produtos: Produto[] = [
-      {
+    {
       id: 9,
       nome: 'Cookie de Chocolate',
-      img: '',
-      desc: 'O tradicional brigadeiro gourmet, extremamente cremoso e coberto com chocolate ao leite.',
+      img: 'cookie.png',
+      desc: 'Cookie artesanal macio por dentro, com pedaços generosos de chocolate nobre.',
       categoria: 'cookie',
       selectedBox: 'Pacote com 1 Cookie'
     },
@@ -362,7 +403,7 @@ export class Store implements AfterViewInit, OnDestroy {
       id: 4,
       nome: 'Brigadeiro de Pistache',
       img: 'BP.png',
-      desc: 'Brigadeiro preparado com o próprio pistache, e granulado de pistache de sabor delicado e acabamento refinado. Um dos sabores mais especiais da casa.',
+      desc: 'Brigadeiro preparado com o próprio pistache e granulado de sabor delicado.',
       categoria: 'brigadeiro',
       selectedBox: 'Caixa de 4 brigadeiros'
     },
@@ -374,43 +415,27 @@ export class Store implements AfterViewInit, OnDestroy {
       categoria: 'brigadeiro',
       selectedBox: 'Caixa de 4 brigadeiros'
     },
-       {
+    {
       id: 6,
       nome: 'Brigadeiro de Oreo',
       img: 'BO.png',
-      desc: 'O equilíbrio perfeito entre o doce do caramelo artesanal e uma delicada pitada de flor de sal.',
+      desc: 'Cremoso brigadeiro branco recheado e envolvido com pedaços crocantes de biscoito Oreo.',
       categoria: 'brigadeiro',
       selectedBox: 'Caixa de 4 brigadeiros'
     },
-       {
+    {
       id: 7,
-      nome: 'Brigadeiro Caramelo Salgado',
+      nome: 'Brigadeiro Churros',
       img: 'BCS.png',
-      desc: 'O equilíbrio perfeito entre o doce do caramelo artesanal e uma delicada pitada de flor de sal.',
+      desc: 'Massa de doce de leite com toque suave de canela e recheio cremoso.',
       categoria: 'brigadeiro',
       selectedBox: 'Caixa de 4 brigadeiros'
     },
-       {
+    {
       id: 8,
-      nome: 'Brigadeiro Caramelo Salgado',
+      nome: 'Brigadeiro Meio Amargo',
       img: 'BE.png',
-      desc: 'O equilíbrio perfeito entre o doce do caramelo artesanal e uma delicada pitada de flor de sal.',
-      categoria: 'brigadeiro',
-      selectedBox: 'Caixa de 4 brigadeiros'
-    },
-       {
-      id: 9,
-      nome: 'Brigadeiro Caramelo Salgado',
-      img: 'BN.png',
-      desc: 'O equilíbrio perfeito entre o doce do caramelo artesanal e uma delicada pitada de flor de sal.',
-      categoria: 'brigadeiro',
-      selectedBox: 'Caixa de 4 brigadeiros'
-    },
-           {
-      id: 10,
-      nome: 'Brigadeiro Caramelo Salgado',
-      img: 'BR.png',
-      desc: 'O equilíbrio perfeito entre o doce do caramelo artesanal e uma delicada pitada de flor de sal.',
+      desc: 'Intenso e balanceado, feito com puro chocolate 54% cacau.',
       categoria: 'brigadeiro',
       selectedBox: 'Caixa de 4 brigadeiros'
     },
@@ -418,55 +443,58 @@ export class Store implements AfterViewInit, OnDestroy {
       id: 11,
       nome: 'Brownie de Ovomaltine',
       img: 'BWC.png',
-      desc: 'O equilíbrio perfeito entre o doce do caramelo artesanal e uma delicada pitada de flor de sal.',
+      desc: 'Massa densa e molhadinha com generosa cobertura crocante de Ovomaltine.',
       categoria: 'brownie',
+      selectedBox: 'Caixa de 4 brownies'
     },
     {
       id: 12,
       nome: 'Brownie de Doce de Leite',
       img: 'BWDL.png',
-      desc: 'O equilíbrio perfeito entre o doce do caramelo artesanal e uma delicada pitada de flor de sal.',
+      desc: 'Brownie tradicional recheado com doce de leite artesanal cremoso.',
       categoria: 'brownie',
+      selectedBox: 'Caixa de 4 brownies'
     },
     {
       id: 13,
-      nome: 'Cesta Inteira',
+      nome: 'Cesta Degustação Completa',
       img: 'CS.png',
-      desc: 'O equilíbrio perfeito entre o doce do caramelo artesanal e uma delicada pitada de flor de sal.',
+      desc: 'Seleção especial com brigadeiros, brownies e cookies montados para presente.',
       categoria: 'cesta',
       selectedBox: 'Cesta Inteira'
     },
     {
       id: 14,
-      nome: 'Cesta',
+      nome: 'Cesta Momento Doce',
       img: 'C2.png',
-      desc: 'O equilíbrio perfeito entre o doce do caramelo artesanal e uma delicada pitada de flor de sal.',
+      desc: 'Combinação perfeita de mimos doces em caixa presenteável com laço de cetim.',
       categoria: 'cesta',
       selectedBox: 'Cesta Inteira'
     },
     {
       id: 15,
-      nome: 'Cesta',
+      nome: 'Cesta Especial de Brigadeiros',
       img: 'C3.png',
-      desc: 'O equilíbrio perfeito entre o doce do caramelo artesanal e uma delicada pitada de flor de sal.',
+      desc: 'Sortimento premium com os sabores mais pedidos da confeitaria.',
       categoria: 'cesta',
       selectedBox: 'Cesta Inteira'
-    },
+    }
   ];
+
   get brigadeiros(): Produto[] {
-    return this.produtos.filter((produto) => produto.categoria === 'brigadeiro');
+    return this.produtos.filter((p) => p.categoria === 'brigadeiro');
   }
 
   get brownies(): Produto[] {
-    return this.produtos.filter((produto) => produto.categoria === 'brownie');
+    return this.produtos.filter((p) => p.categoria === 'brownie');
   }
 
   get cestas(): Produto[] {
-    return this.produtos.filter((produto) => produto.categoria === 'cesta');
+    return this.produtos.filter((p) => p.categoria === 'cesta');
   }
 
-    get cookies(): Produto[] {
-    return this.produtos.filter((produto) => produto.categoria === 'cookie');
+  get cookies(): Produto[] {
+    return this.produtos.filter((p) => p.categoria === 'cookie');
   }
 
   @ViewChildren('carouselItem') carouselItems!: QueryList<ElementRef<HTMLElement>>;
