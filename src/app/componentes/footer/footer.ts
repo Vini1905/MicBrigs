@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 interface FooterLink{
   name:string;
-  icon: 'instagram'|'whatsapp';
+  icon: 'instagram'|'whatsapp'|'facebook';
   url: string;
 }
 
@@ -30,6 +30,12 @@ export class Footer {
       title:'Telefone',
       links:[
         {name:'Whatsapp', icon: 'whatsapp', url:'https://api.whatsapp.com/send/?phone=5511982524269&text=Oi&type=phone_number&app_absent=0&utm_source=ig'}
+      ]
+    },
+      {
+      title:'Facebook',
+      links:[
+        {name:'Facebook', icon: 'facebook', url:'https://api.whatsapp.com/send/?phone=5511982524269&text=Oi&type=phone_number&app_absent=0&utm_source=ig'}
       ]
     },
   ];
