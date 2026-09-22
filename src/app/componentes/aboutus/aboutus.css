@@ -1,154 +1,161 @@
-
 @import url('https://fonts.googleapis.com/css2?family=MonteCarlo&display=swap');
-
 @import url('https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,1..1000&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Archivo+Black&display=swap');
 
+/* =========================================================
+   1. BASE MOBILE (Padrão para Smartphones - < 992px)
+   ========================================================= */
 
-
-.about-container{
-    min-height:100vh;
-    display:flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items:center;
-    padding:80px 16px 24px;
-    box-sizing: border-box;
-    gap:40px;
-        background: linear-gradient(180deg, #E3EEFF 0%, #f598bd 90%, #e224a3 100%);
-
-}
-
-.about-wrapper{
-    width: 100%;
-    max-width: 1200px;
-    display:flex;
-    flex-direction: column;
-    align-items: center;
-    gap:32px;
-}
-.about-text-zone{
-    width:80%;
-    display:flex;
-    flex-direction: column;
-    text-align: center;
-    align-items: center;
-}
-
-
-
-.text{
-    font-family: "Archivo Black", sans-serif;
- letter-spacing: 0;
- font-weight: 400;
- font-size: 200px;
-  color:#FF69B4;
-  white-space: nowrap;
+.about-container {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 16px 40px;
+  box-sizing: border-box;
+  gap: 40px;
+  background: linear-gradient(180deg, #E3EEFF 0%, #f598bd 90%, #e224a3 100%);
+  position: relative;
   overflow: hidden;
-  -webkit-background-clip: text;
-  background-clip: text;
-  text-shadow: 0 10px 28px rgba(0, 0, 0, .28);
 }
 
-@keyframes fx-iridescent {
-  to { filter: hue-rotate(360deg); background-position: 120% 50%; }
+.about-wrapper {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
 }
 
-@media(min-width:992px){
-    .about-wrapper{
-        display: flex;
-        margin-top:50px;
-        flex-direction:row;
-        align-items:flex-start;
-        gap:40px;
-    }
-    .about-wrapper.reverse{
-        flex-direction: row-reverse;
-    }
-}
-@keyframes draw{
-    0%{
-        stroke-dashoffset:6000;
-    }
-    100%{
-        stroke-dashoffset:0;
-    }
+/* ÁREA DE TEXTO (MOBILE FIRST) */
+.about-text-zone {
+  width: 100%;
+  max-width: 580px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-sizing: border-box;
 }
 
-.about-text-zone{
-    align-items: flex-start;
-    text-align: left;
+/* TÍTULO RESPONSIVO SEM QUEBRAR O LAYOUT */
+.text {
+  font-family: "Archivo Black", sans-serif;
+  letter-spacing: -0.5px;
+  font-weight: 400;
+  font-size: clamp(2.2rem, 8vw, 5.5rem); /* Ajuste automático entre celular e desktop */
+  line-height: 1.1;
+  color: #FF69B4;
+  margin: 0 0 16px;
+  text-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+  word-break: break-word;
 }
 
-.about-desc{
-    font-size:15px;
-    color:#2b1d0c;
-    line-height:1.7;
-    margin-bottom:24px;
-    max-width:540px;
-    font-family:'Montserrat';
-    text-rendering:optimizeSpeed;
+.about-desc {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1rem;
+  color: #2b1d0c;
+  line-height: 1.7;
+  margin-bottom: 20px;
+  max-width: 540px;
+  text-rendering: optimizeLegibility;
 }
-.brigs-svg{
-  z-index:1;
-  height:800px;
-    transform: translate(-68%, -176%);
-    left: 50%;
-  top: 50%;
-    justify-content: center;
+
+/* ÁREA DA IMAGEM (MOBILE FIRST) */
+.about-img-zone {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.img-card-backdrop {
+  width: 100%;
+  max-width: 380px;
+  position: relative;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 15px 35px -10px rgba(255, 0, 81, 0.45);
+  box-sizing: border-box;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  display: flex;
+  justify-content: center;
   align-items: center;
 }
-.about-img-zone{
-    display: flex;
-    justify-content: center;
-    align-items:center;
-    width: 100%;
+
+.img-card-backdrop img {
+  width: 100%;
+  height: auto;
+  max-height: 380px;
+  object-fit: cover;
+  border-radius: 14px;
+  display: block;
 }
 
-.img-card-backdrop{
-    width: 100%;
-    position: relative;
-    height: auto;
-    padding: 12px;
-    max-height: 320px;
-    background: transparent;
-    box-shadow:0 15px 35px -10px #ff0051;
-    box-sizing: border-box;
-    border-radius: 12px;
+/* SVG DECORATIVO DE FUNDO */
+.brigs-svg {
+  position: absolute;
+  z-index: 1;
+  width: clamp(280px, 60vw, 650px);
+  height: auto;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  opacity: 0.35;
+  filter: grayscale(100%) brightness(1.2);
 }
 
-.img-card-backdrop img{
-    width: 80%;
-    height: auto;
-    max-height: 400px;
-    object-fit: cover;
-    border-radius: 12px;
-    display: block;
-}
+/* =========================================================
+   2. BREAKPOINT DESKTOP (min-width: 992px)
+   ========================================================= */
 
-.about-desc{
-    font-size: 1.1 rem;
-}
+@media (min-width: 992px) {
+  .about-container {
+    padding: 100px 32px;
+    gap: 60px;
+  }
 
-@media(min-width:992px){
-    .img-card-backdrop{
-        max-height: 800px;
-    }
-    .about-container{
-        padding:100px 24px;
-        gap:80px;
-    }
-    .about-wrapper{
-        align-items: start;
-    }
-    .about-wrapper.reverse{
-        flex-direction: row-reverse;
-    }
-    .about-text-zone{
-        align-items: flex-start;
-        text-align: left;
-    }
-    .about-desc{
-        font-size: 1.1rem;
-    }
-}
+  .about-wrapper {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 48px;
+    margin-top: 20px;
+  }
 
+  .about-wrapper.reverse {
+    flex-direction: row-reverse;
+  }
+
+  .about-text-zone {
+    width: 50%;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .about-desc {
+    font-size: 1.1rem;
+    margin-bottom: 24px;
+  }
+
+  .about-img-zone {
+    width: 50%;
+  }
+
+  .img-card-backdrop {
+    max-width: 460px;
+    padding: 16px;
+  }
+
+  .img-card-backdrop img {
+    max-height: 520px;
+  }
+}

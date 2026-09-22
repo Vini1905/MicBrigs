@@ -209,9 +209,6 @@
                   <li (click)="toggleDropdown(produto, $event)">
                     {{produto.selectedBox || 'Pedaço Individual'}}
                     <ul class="dropdown" [class.active]="produto.dropdownOpen">
-                      <li (click)="selectBox(produto, 'Pedaço Individual', $event)">Pedaço Individual</li>
-                      <li (click)="selectBox(produto, 'Bolo Pequeno (10 fatias)', $event)">Bolo Pequeno (10 fatias)</li>
-                      <li (click)="selectBox(produto, 'Bolo Médio (20 fatias)', $event)">Bolo Médio (20 fatias)</li>
                       <li (click)="selectBox(produto, 'Bolo Inteiro Grande', $event)">Bolo Inteiro Grande</li>
                     </ul>
                   </li>

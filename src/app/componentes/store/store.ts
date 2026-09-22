@@ -59,26 +59,34 @@ export class Store implements AfterViewInit, OnDestroy {
   bolos: any[] = [
     {
       id: 1,
-      nome: 'Bolo Trufado com Frutas Vermelhas',
+      nome: 'Bolo Maltida',
       desc: 'Massa intensa de cacau com brigadeiro gourmet, morangos frescos e amoras douradas.',
-      img: 'BFV.png',
-      selectedBox: 'Bolo Pequeno (10 fatias)',
+      img: 'CKM.png',
+      selectedBox: 'Bolo Matilda',
       dropdownOpen: false
     },
     {
       id: 2,
-      nome: 'Bolo Delícia de Morango e Chocolate Branco',
+      nome: 'Bolo RedVelvet',
       desc: 'Pão de ló leve com chantilly fresco, raspas de chocolate branco nobre e morangos.',
-      img: 'BDL.png',
-      selectedBox: 'Bolo Pequeno (10 fatias)',
+      img: 'BDC.png',
+      selectedBox: 'Bolo RedVelvet',
       dropdownOpen: false
     },
     {
       id: 3,
-      nome: 'Bolo Delícia de Morango e Chocolate Branco',
+      nome: 'Bolo Ninho c/Nutella',
       desc: 'Pão de ló leve com chantilly fresco, raspas de chocolate branco nobre e morangos.',
       img: 'BDC.png',
-      selectedBox: 'Bolo Pequeno (10 fatias)',
+      selectedBox: 'Bolo Ninho c/Nutella',
+      dropdownOpen: false
+    },
+      {
+      id: 4,
+      nome: 'Bolo Floresta Negra',
+      desc: 'Pão de ló leve com chantilly fresco, raspas de chocolate branco nobre e morangos.',
+      img: 'CKFN.png',
+      selectedBox: 'Bolo Floresta Negra',
       dropdownOpen: false
     }
   ];
@@ -103,13 +111,12 @@ export class Store implements AfterViewInit, OnDestroy {
   ) {}
 
   boxPrices: { [key: string]: number } = {
-    'Caixa de 4 brigadeiros': 20.00,
-    'Caixa de 6 brigadeiros': 38.00,
-    'Caixa de 12 brigadeiros': 72.00,
-    'Caixa de 24 brigadeiros': 72.00,
-    'Caixa de 25 brigadeiros': 75.00,
-    'Caixa de 50 brigadeiros': 140.00,
-    'Caixa de 100 brigadeiros': 260.00,
+    'Caixa de 4 brigadeiros': 18.00,
+    'Caixa de 6 brigadeiros': 23.50,
+    'Caixa de 12 brigadeiros': 38.00,
+    'Caixa de 25 brigadeiros': 73.00,
+    'Caixa de 50 brigadeiros': 125.00,
+    'Caixa de 100 brigadeiros': 230.00,
     'Caixa de 4 brownies': 28.00,
     'Caixa de 6 brownies': 42.00,
     'Caixa de 12 brownies': 80.00,
@@ -122,10 +129,11 @@ export class Store implements AfterViewInit, OnDestroy {
     'Pacote com 3 Cookies': 36.00,
     'Pacote com 6 Cookies': 70.00,
     'Pacote com 12 Cookies': 130.00,
-    'Pedaço Individual': 15.00,
-    'Bolo Pequeno (10 fatias)': 75.00,
-    'Bolo Médio (20 fatias)': 130.00,
-    'Bolo Inteiro Grande': 180.00
+    'Bolo Matilda': 75.00,
+    'Bolo RedVelvet': 130.00,
+    'Bolo Ninho c/Nutella': 180.00,
+    'Bolo de Maracúja C/Chocolate':150.00,
+    'Bolo Floresta Negra':180.00
   };
 
   toggleDropdown(produto: Produto, event: Event) {
@@ -426,7 +434,7 @@ export class Store implements AfterViewInit, OnDestroy {
     {
       id: 7,
       nome: 'Brigadeiro Churros',
-      img: 'BCS.png',
+      img: 'BR.png',
       desc: 'Massa de doce de leite com toque suave de canela e recheio cremoso.',
       categoria: 'brigadeiro',
       selectedBox: 'Caixa de 4 brigadeiros'
@@ -434,7 +442,7 @@ export class Store implements AfterViewInit, OnDestroy {
     {
       id: 8,
       nome: 'Brigadeiro Meio Amargo',
-      img: 'BE.png',
+      img: 'BC.png',
       desc: 'Intenso e balanceado, feito com puro chocolate 54% cacau.',
       categoria: 'brigadeiro',
       selectedBox: 'Caixa de 4 brigadeiros'
