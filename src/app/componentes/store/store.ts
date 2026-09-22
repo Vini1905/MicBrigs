@@ -59,7 +59,7 @@ export class Store implements AfterViewInit, OnDestroy {
   bolos: any[] = [
     {
       id: 1,
-      nome: 'Bolo Maltida',
+      nome: 'Bolo Matilda',
       desc: 'Massa intensa de cacau com brigadeiro gourmet, morangos frescos e amoras douradas.',
       img: 'CKM.png',
       selectedBox: 'Bolo Matilda',
@@ -73,16 +73,8 @@ export class Store implements AfterViewInit, OnDestroy {
       selectedBox: 'Bolo RedVelvet',
       dropdownOpen: false
     },
-    {
-      id: 3,
-      nome: 'Bolo Ninho c/Nutella',
-      desc: 'Pão de ló leve com chantilly fresco, raspas de chocolate branco nobre e morangos.',
-      img: 'BDC.png',
-      selectedBox: 'Bolo Ninho c/Nutella',
-      dropdownOpen: false
-    },
       {
-      id: 4,
+      id: 3,
       nome: 'Bolo Floresta Negra',
       desc: 'Pão de ló leve com chantilly fresco, raspas de chocolate branco nobre e morangos.',
       img: 'CKFN.png',
@@ -127,9 +119,9 @@ export class Store implements AfterViewInit, OnDestroy {
     'Cesta Especial': 18.00,
     'Pacote com 1 Cookie': 13.00,
     'Pacote com 3 Cookies': 36.00,
-    'Pacote com 6 Cookies': 70.00,
-    'Pacote com 12 Cookies': 130.00,
-    'Bolo Matilda': 75.00,
+    'Pacote com 6 Cookies': 66.00,
+    'Pacote com 12 Cookies': 120.00,
+    'Bolo Matilda': 180.00,
     'Bolo RedVelvet': 130.00,
     'Bolo Ninho c/Nutella': 180.00,
     'Bolo de Maracúja C/Chocolate':150.00,
@@ -383,6 +375,14 @@ export class Store implements AfterViewInit, OnDestroy {
       categoria: 'cookie',
       selectedBox: 'Pacote com 1 Cookie'
     },
+       {
+      id: 10,
+      nome: 'Cookie de MMS',
+      img: 'cookie.png',
+      desc: 'Cookie artesanal macio por dentro, com pedaços generosos de chocolate nobre.',
+      categoria: 'cookie',
+      selectedBox: 'Pacote com 1 Cookie'
+    },
     {
       id: 1,
       nome: 'Brigadeiro de Chocolate ao Leite',
@@ -442,7 +442,7 @@ export class Store implements AfterViewInit, OnDestroy {
     {
       id: 8,
       nome: 'Brigadeiro Meio Amargo',
-      img: 'BC.png',
+      img: 'BD.png',
       desc: 'Intenso e balanceado, feito com puro chocolate 54% cacau.',
       categoria: 'brigadeiro',
       selectedBox: 'Caixa de 4 brigadeiros'
