@@ -27,7 +27,7 @@ export interface Produto {
   nome: string;
   desc: string;
   img: string;
-  categoria: 'brigadeiro' | 'brownie' | 'cesta' | 'cookie';
+  categoria: 'brigadeiro' | 'brownie' | 'cesta' | 'cookie'|'bolo';
   selectedBox?: string;
   dropdownOpen?: boolean;
 }
@@ -147,6 +147,7 @@ export class Store implements AfterViewInit, OnDestroy {
     if (produto.categoria === 'cesta') defaultBox = 'Cesta Inteira';
     if (produto.categoria === 'cookie') defaultBox = 'Pacote com 1 Cookie';
     if (produto.categoria === 'brownie') defaultBox = 'Caixa de 4 brownies';
+    if(produto.categoria === 'bolo') defaultBox= 'Bolo Inteiro';
 
     const boxSize = produto.selectedBox || defaultBox;
     const price = this.boxPrices[boxSize] ?? 20.00;
@@ -451,7 +452,7 @@ export class Store implements AfterViewInit, OnDestroy {
       id: 11,
       nome: 'Brownie de Ovomaltine',
       img: 'BWC.png',
-      desc: 'Massa densa e molhadinha com generosa cobertura crocante de Ovomaltine.',
+      desc: 'Creme de Ovomaltine com sua textura crocante e sabor inconfundível, perfeito para quem ama um toque extra de sabor.',
       categoria: 'brownie',
       selectedBox: 'Caixa de 4 brownies'
     },
@@ -459,7 +460,7 @@ export class Store implements AfterViewInit, OnDestroy {
       id: 12,
       nome: 'Brownie de Doce de Leite',
       img: 'BWDL.png',
-      desc: 'Brownie tradicional recheado com doce de leite artesanal cremoso.',
+      desc: 'Cremoso, aveludado e na medida certa de doçura, harmonizando perfeitamente com a intensidade do brownie.',
       categoria: 'brownie',
       selectedBox: 'Caixa de 4 brownies'
     },
